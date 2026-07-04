@@ -84,8 +84,9 @@ See **[SYLLABUS.md](SYLLABUS.md)** for the full day-by-day plan. Short version:
 This is an actively-growing curriculum. Fully-built sample lessons that show the pattern
 end-to-end (concept notebook + homework + passing auto-grader):
 
-- ✅ **Day 01 — Dynamic Arrays** (`curriculum/week1_data_structures/day01_dynamic_arrays`)
-- ✅ **Day 02 — Linked Lists** (`curriculum/week1_data_structures/day02_linked_lists`)
+- ✅ **Week 1 — Data Structures: complete (Days 01–07)**
+  - Day 01 Dynamic Arrays · Day 02 Linked Lists · Day 03 Stacks/Queues/Ring Buffer ·
+    Day 04 Hash Maps · Day 05 Trees & BSTs · Day 06 Heaps · Day 07 Graphs (BFS/DFS + grid pathfinding)
 - ✅ **Day 08 — Processes & CPU Scheduling** (`curriculum/week2_operating_systems/day08_processes_scheduling`)
 - ✅ **Day 10 — Virtual Memory & Paging** (`curriculum/week2_operating_systems/day10_virtual_memory`)
 - ✅ **Day 22 — Tensors & Autograd** (`curriculum/week4_pytorch_executorch/day22_tensors_autograd`)

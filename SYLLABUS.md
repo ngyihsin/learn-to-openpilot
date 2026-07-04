@@ -18,11 +18,11 @@ time you reach openpilot, nothing in its stack is a black box.
 |-----|-------|--------|--------------|--------|
 | 01 | **Dynamic arrays & amortized analysis** | notebook + pytest | A resizable array with amortized O(1) append | ✅ |
 | 02 | **Linked lists (singly, doubly)** | notebook + pytest | A doubly-linked list with O(1) insert/delete | ✅ |
-| 03 | Stacks & queues | pytest | Stack, queue, and a ring buffer | ⬜ |
-| 04 | Hash maps | notebook + pytest | An open-addressing hash table | ⬜ |
-| 05 | Trees & BSTs | notebook + pytest | A binary search tree with traversals | ⬜ |
-| 06 | Heaps & priority queues | notebook + pytest | A binary heap (you'll reuse it in Day 8!) | ⬜ |
-| 07 | Graphs, BFS & DFS | notebook + pytest | Graph + shortest-path on a grid | ⬜ |
+| 03 | **Stacks & queues** | pytest | Stack, queue, and a ring buffer | ✅ |
+| 04 | **Hash maps** | notebook + pytest | An open-addressing hash table | ✅ |
+| 05 | **Trees & BSTs** | notebook + pytest | A binary search tree with traversals | ✅ |
+| 06 | **Heaps & priority queues** | notebook + pytest | A binary heap (you'll reuse it in Day 8!) | ✅ |
+| 07 | **Graphs, BFS & DFS** | notebook + pytest | Graph + shortest-path on a grid | ✅ |
 
 ## Week 2 — Operating Systems
 *Goal: understand what happens between your code and the hardware.*
