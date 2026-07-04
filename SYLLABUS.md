@@ -42,13 +42,13 @@ time you reach openpilot, nothing in its stack is a black box.
 
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
-| 15 | Memory model: stack, heap, pointers | notebook + pytest | A bump allocator (in Python, then read C) | ⬜ |
-| 16 | C for Python programmers | pytest | Port a hot function to C | ⬜ |
-| 17 | Calling C from Python (ctypes / cffi) | pytest | Wrap a C function, benchmark the speedup | ⬜ |
-| 18 | Syscalls & the kernel boundary | notebook | Trace a program with `strace` | ⬜ |
-| 19 | Sockets & networking | pytest | A minimal TCP echo server/client | ⬜ |
-| 20 | Profiling & performance | notebook + pytest | Find and fix a 100× slowdown | ⬜ |
-| 21 | Build systems (Make, scons, CMake) | notebook | Build a multi-file C project (openpilot uses scons) | ⬜ |
+| 15 | **Memory model: stack, heap, pointers** | notebook + pytest | A bump allocator | ✅ |
+| 16 | **C for Python programmers** | pytest | Port hot functions to C (compiled + called via ctypes) | ✅ |
+| 17 | **Calling C from Python (ctypes / cffi)** | pytest | Wrap C array functions, marshal data across | ✅ |
+| 18 | **Syscalls & the kernel boundary** | notebook + pytest | Raw file I/O via os.open/read/write/lseek | ✅ |
+| 19 | **Sockets & networking** | pytest | A minimal framed TCP echo server/client | ✅ |
+| 20 | **Profiling & performance** | notebook + pytest | Find and fix an O(n²) slowdown | ✅ |
+| 21 | **Build systems (Make, scons, CMake)** | notebook + pytest | Dependency graph + incremental rebuild logic | ✅ |
 
 ## Week 4 — PyTorch / ExecuTorch
 *Goal: train a model, then ship it to run on-device the way openpilot does.*

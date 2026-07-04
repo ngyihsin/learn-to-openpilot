@@ -90,6 +90,9 @@ end-to-end (concept notebook + homework + passing auto-grader):
 - ✅ **Week 2 — Operating Systems: complete (Days 08–14)**
   - Day 08 CPU Scheduling · Day 09 Process Lifecycle · Day 10 Virtual Memory · Day 11 Threads & the GIL ·
     Day 12 Synchronization · Day 13 Deadlock · Day 14 IPC & Pipes
+- ✅ **Week 3 — Systems Programming: complete (Days 15–21)**
+  - Day 15 Memory Model (bump allocator) · Day 16 C for Python · Day 17 ctypes FFI · Day 18 Syscalls ·
+    Day 19 Sockets · Day 20 Profiling · Day 21 Build Systems
 - ✅ **Day 22 — Tensors & Autograd** (`curriculum/week4_pytorch_executorch/day22_tensors_autograd`)
 - ✅ **Day 29 — openpilot on-ramp** (`curriculum/capstone_openpilot/day29_openpilot_onramp`)
 
