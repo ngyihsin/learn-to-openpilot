@@ -69,7 +69,7 @@ time you reach openpilot, nothing in its stack is a black box.
 | Day | Topic | Format | You'll do | Status |
 |-----|-------|--------|-----------|--------|
 | 29 | **openpilot architecture & building it** | guided README | Tour the stack, build it, run a replay | ✅ |
-| 30 | Find a good-first-issue & open a PR | guided README | Pick an issue, write a test, submit a PR | ⬜ |
+| 30 | **Find a good-first-issue & open a PR** | guided README | Pick an issue, write a test, submit a PR | ✅ |
 
 ---
 

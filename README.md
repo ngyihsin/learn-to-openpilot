@@ -81,26 +81,28 @@ See **[SYLLABUS.md](SYLLABUS.md)** for the full day-by-day plan. Short version:
 
 ## What's built so far
 
-This is an actively-growing curriculum. Fully-built sample lessons that show the pattern
-end-to-end (concept notebook + homework + passing auto-grader):
+**All 30 days are built** — every coding day ships a student starter, a reference solution, and a
+pytest auto-grader, and every concept day ships a runnable visualization notebook. The graders pass
+against the reference solutions (`LP_IMPL=solution pytest curriculum`), so the pattern is proven
+end to end.
 
-- ✅ **Week 1 — Data Structures: complete (Days 01–07)**
+- ✅ **Week 1 — Data Structures (Days 01–07)**
   - Day 01 Dynamic Arrays · Day 02 Linked Lists · Day 03 Stacks/Queues/Ring Buffer ·
     Day 04 Hash Maps · Day 05 Trees & BSTs · Day 06 Heaps · Day 07 Graphs (BFS/DFS + grid pathfinding)
-- ✅ **Week 2 — Operating Systems: complete (Days 08–14)**
+- ✅ **Week 2 — Operating Systems (Days 08–14)**
   - Day 08 CPU Scheduling · Day 09 Process Lifecycle · Day 10 Virtual Memory · Day 11 Threads & the GIL ·
     Day 12 Synchronization · Day 13 Deadlock · Day 14 IPC & Pipes
-- ✅ **Week 3 — Systems Programming: complete (Days 15–21)**
+- ✅ **Week 3 — Systems Programming (Days 15–21)**
   - Day 15 Memory Model (bump allocator) · Day 16 C for Python · Day 17 ctypes FFI · Day 18 Syscalls ·
     Day 19 Sockets · Day 20 Profiling · Day 21 Build Systems
-- ✅ **Week 4 — PyTorch / ExecuTorch: complete (Days 22–28)**
+- ✅ **Week 4 — PyTorch / ExecuTorch (Days 22–28)**
   - Day 22 Tensors & Autograd · Day 23 nn.Module · Day 24 CNNs · Day 25 DataLoaders ·
     Day 26 Exporting · Day 27 ExecuTorch lowering · Day 28 Quantization
-- ✅ **Day 29 — openpilot on-ramp** (`curriculum/capstone_openpilot/day29_openpilot_onramp`)
+- ✅ **Capstone — openpilot (Days 29–30)**
+  - Day 29 architecture, build & replay · Day 30 find a good-first-issue & open your first PR
 
-Every other day has a slot in `SYLLABUS.md` and is being filled in using the
-[`templates/lesson_template/`](templates/lesson_template) pattern. Contributions welcome —
-see [CONTRIBUTING.md](CONTRIBUTING.md).
+Want to extend or refine a lesson? The [`templates/lesson_template/`](templates/lesson_template)
+pattern and [CONTRIBUTING.md](CONTRIBUTING.md) show how — contributions welcome.
 
 ## Format: notebooks vs `.py` + pytest
 
