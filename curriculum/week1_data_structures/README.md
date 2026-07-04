@@ -6,7 +6,7 @@ the building blocks every later week (and openpilot) rests on.
 | Day | Topic | Status |
 |-----|-------|--------|
 | 01 | [Dynamic arrays & amortized analysis](day01_dynamic_arrays) | ✅ built |
-| 02 | Linked lists | ⬜ planned |
+| 02 | [Linked lists](day02_linked_lists) | ✅ built |
 | 03 | Stacks & queues | ⬜ planned |
 | 04 | Hash maps | ⬜ planned |
 | 05 | Trees & BSTs | ⬜ planned |

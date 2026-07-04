@@ -17,7 +17,7 @@ time you reach openpilot, nothing in its stack is a black box.
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
 | 01 | **Dynamic arrays & amortized analysis** | notebook + pytest | A resizable array with amortized O(1) append | ✅ |
-| 02 | Linked lists (singly, doubly) | notebook + pytest | A doubly-linked list with O(1) insert/delete | ⬜ |
+| 02 | **Linked lists (singly, doubly)** | notebook + pytest | A doubly-linked list with O(1) insert/delete | ✅ |
 | 03 | Stacks & queues | pytest | Stack, queue, and a ring buffer | ⬜ |
 | 04 | Hash maps | notebook + pytest | An open-addressing hash table | ⬜ |
 | 05 | Trees & BSTs | notebook + pytest | A binary search tree with traversals | ⬜ |
@@ -31,7 +31,7 @@ time you reach openpilot, nothing in its stack is a black box.
 |-----|-------|--------|--------------|--------|
 | 08 | **Processes, threads & CPU scheduling** | notebook + pytest | FCFS / SJF / Round-Robin schedulers + metrics | ✅ |
 | 09 | Context switching & the process lifecycle | notebook | A state-machine simulator | ⬜ |
-| 10 | Virtual memory & paging | notebook + pytest | A page-table + FIFO/LRU page-replacement sim | ⬜ |
+| 10 | **Virtual memory & paging** | notebook + pytest | A page-table + FIFO/LRU page-replacement sim | ✅ |
 | 11 | Threads & the GIL | notebook + pytest | Threaded vs. multiprocess benchmark | ⬜ |
 | 12 | Synchronization: locks, semaphores | notebook + pytest | A bounded-buffer producer/consumer | ⬜ |
 | 13 | Deadlock & race conditions | notebook | Reproduce and fix a data race | ⬜ |

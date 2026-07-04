@@ -85,7 +85,9 @@ This is an actively-growing curriculum. Fully-built sample lessons that show the
 end-to-end (concept notebook + homework + passing auto-grader):
 
 - ✅ **Day 01 — Dynamic Arrays** (`curriculum/week1_data_structures/day01_dynamic_arrays`)
+- ✅ **Day 02 — Linked Lists** (`curriculum/week1_data_structures/day02_linked_lists`)
 - ✅ **Day 08 — Processes & CPU Scheduling** (`curriculum/week2_operating_systems/day08_processes_scheduling`)
+- ✅ **Day 10 — Virtual Memory & Paging** (`curriculum/week2_operating_systems/day10_virtual_memory`)
 - ✅ **Day 22 — Tensors & Autograd** (`curriculum/week4_pytorch_executorch/day22_tensors_autograd`)
 - ✅ **Day 29 — openpilot on-ramp** (`curriculum/capstone_openpilot/day29_openpilot_onramp`)
 

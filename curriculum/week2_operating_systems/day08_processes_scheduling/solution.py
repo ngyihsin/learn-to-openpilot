@@ -1,12 +1,58 @@
-"""Day 08 reference solution — FCFS, SJF, and Round-Robin schedulers."""
+"""Day 08 reference solution — FCFS, SJF, and Round-Robin schedulers.
+
+Self-contained: the shared types are re-declared here (identical to homework.py) so this
+lesson folder works on its own and the whole-suite grader has no module-name clashes.
+"""
 from __future__ import annotations
 
 from collections import deque
+from dataclasses import dataclass, field
 
-from homework import Process, Segment, ScheduleResult, finalize  # reuse the shared types
 
-# Note: this import works because pytest runs with the lesson dir on the path via the
-# loader in test_homework.py. When authored standalone we re-declare below if needed.
+@dataclass(frozen=True)
+class Process:
+    pid: str
+    arrival: int
+    burst: int
+
+
+@dataclass(frozen=True)
+class Segment:
+    pid: str
+    start: int
+    end: int
+
+
+@dataclass
+class ScheduleResult:
+    segments: list[Segment]
+    completion: dict[str, int] = field(default_factory=dict)
+    turnaround: dict[str, int] = field(default_factory=dict)
+    waiting: dict[str, int] = field(default_factory=dict)
+
+    @property
+    def avg_waiting(self) -> float:
+        return sum(self.waiting.values()) / len(self.waiting)
+
+    @property
+    def avg_turnaround(self) -> float:
+        return sum(self.turnaround.values()) / len(self.turnaround)
+
+
+def finalize(processes: list[Process], segments: list[Segment]) -> ScheduleResult:
+    merged: list[Segment] = []
+    for s in segments:
+        if merged and merged[-1].pid == s.pid and merged[-1].end == s.start:
+            merged[-1] = Segment(s.pid, merged[-1].start, s.end)
+        else:
+            merged.append(s)
+    by_pid = {p.pid: p for p in processes}
+    completion = {p.pid: 0 for p in processes}
+    for s in merged:
+        completion[s.pid] = max(completion[s.pid], s.end)
+    turnaround = {pid: completion[pid] - by_pid[pid].arrival for pid in completion}
+    waiting = {pid: turnaround[pid] - by_pid[pid].burst for pid in completion}
+    return ScheduleResult(merged, completion, turnaround, waiting)
 
 
 def fcfs(processes: list[Process]) -> ScheduleResult:

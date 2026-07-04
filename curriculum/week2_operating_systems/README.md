@@ -8,7 +8,7 @@ makes that phrase mean something.
 |-----|-------|--------|
 | 08 | [Processes, threads & CPU scheduling](day08_processes_scheduling) | ✅ built |
 | 09 | Context switching & the process lifecycle | ⬜ planned |
-| 10 | Virtual memory & paging | ⬜ planned |
+| 10 | [Virtual memory & paging](day10_virtual_memory) | ✅ built |
 | 11 | Threads & the GIL | ⬜ planned |
 | 12 | Synchronization: locks, semaphores | ⬜ planned |
 | 13 | Deadlock & race conditions | ⬜ planned |
