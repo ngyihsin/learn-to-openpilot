@@ -1,0 +1,15 @@
+# Core — needed for most lessons and all auto-graders
+pytest>=8.0
+numpy>=1.26
+
+# Notebooks & visualization (concept lessons)
+jupyterlab>=4.0
+matplotlib>=3.8
+
+# Week 4 — PyTorch / ExecuTorch
+# For CPU-only torch you may prefer:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.2
+# ExecuTorch is introduced on Day 27. It moves fast; install per its docs when you get there:
+#   https://pytorch.org/executorch/  ->  pip install executorch
+# executorch>=0.4

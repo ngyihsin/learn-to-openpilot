@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Jupyter
+*.nbconvert.ipynb
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Models / data artifacts students generate
+*.pt
+*.pte
+*.onnx
+data/
+!curriculum/**/data/.gitkeep
