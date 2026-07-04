@@ -56,12 +56,12 @@ time you reach openpilot, nothing in its stack is a black box.
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
 | 22 | **Tensors & autograd** | notebook + pytest | Gradient descent from scratch, then with autograd | ✅ |
-| 23 | `nn.Module` & the training loop | notebook + pytest | Train a classifier on a toy dataset | ⬜ |
-| 24 | CNNs & computer vision | notebook + pytest | A small CNN on grayscale road-sign images | ⬜ |
-| 25 | Datasets, DataLoaders & augmentation | pytest | An efficient input pipeline | ⬜ |
-| 26 | Exporting models (TorchScript / ONNX / `torch.export`) | notebook + pytest | Export & re-load a trained model | ⬜ |
-| 27 | **ExecuTorch**: on-device inference | notebook + pytest | Lower a model to ExecuTorch and run it | ⬜ |
-| 28 | Quantization & making models fast | notebook + pytest | Quantize a model, measure size/latency | ⬜ |
+| 23 | **`nn.Module` & the training loop** | notebook + pytest | Train an MLP classifier on a toy dataset | ✅ |
+| 24 | **CNNs & computer vision** | notebook + pytest | A small CNN on synthetic images | ✅ |
+| 25 | **Datasets, DataLoaders & augmentation** | pytest | A custom Dataset + DataLoader pipeline | ✅ |
+| 26 | **Exporting models (TorchScript / ONNX / `torch.export`)** | notebook + pytest | Export & re-load a trained model | ✅ |
+| 27 | **ExecuTorch**: on-device inference | notebook + pytest | Lower a model with torch.export and run it | ✅ |
+| 28 | **Quantization & making models fast** | notebook + pytest | Quantize a model, measure size + error | ✅ |
 
 ## Days 29–30 — The openpilot On-Ramp
 *Goal: go from "I understand the pieces" to "I opened a PR."*

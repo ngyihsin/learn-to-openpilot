@@ -93,7 +93,9 @@ end-to-end (concept notebook + homework + passing auto-grader):
 - ✅ **Week 3 — Systems Programming: complete (Days 15–21)**
   - Day 15 Memory Model (bump allocator) · Day 16 C for Python · Day 17 ctypes FFI · Day 18 Syscalls ·
     Day 19 Sockets · Day 20 Profiling · Day 21 Build Systems
-- ✅ **Day 22 — Tensors & Autograd** (`curriculum/week4_pytorch_executorch/day22_tensors_autograd`)
+- ✅ **Week 4 — PyTorch / ExecuTorch: complete (Days 22–28)**
+  - Day 22 Tensors & Autograd · Day 23 nn.Module · Day 24 CNNs · Day 25 DataLoaders ·
+    Day 26 Exporting · Day 27 ExecuTorch lowering · Day 28 Quantization
 - ✅ **Day 29 — openpilot on-ramp** (`curriculum/capstone_openpilot/day29_openpilot_onramp`)
 
 Every other day has a slot in `SYLLABUS.md` and is being filled in using the

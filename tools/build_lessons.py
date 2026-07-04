@@ -1122,6 +1122,201 @@ DAY21 = [
 ]
 
 
+# --------------------------------------------------------------------------------------
+# Day 23 — nn.Module & training loop
+# --------------------------------------------------------------------------------------
+DAY23 = [
+    md("# Day 23 — nn.Module & the Training Loop, Visualized",
+       "",
+       "The five-step loop from Day 22, now with nn.Module + an optimizer. Train a classifier on",
+       "two blobs and watch the decision boundary form."),
+    code("import torch, torch.nn as nn",
+         "torch.manual_seed(0)",
+         "",
+         "c0 = torch.randn(100, 2) * 0.5 + torch.tensor([-2.0, -2.0])",
+         "c1 = torch.randn(100, 2) * 0.5 + torch.tensor([2.0, 2.0])",
+         "X = torch.cat([c0, c1]); y = torch.cat([torch.zeros(100), torch.ones(100)]).long()",
+         "",
+         "model = nn.Sequential(nn.Linear(2, 16), nn.ReLU(), nn.Linear(16, 2))",
+         "opt = torch.optim.Adam(model.parameters(), lr=0.05); crit = nn.CrossEntropyLoss()",
+         "losses = []",
+         "for _ in range(150):",
+         "    opt.zero_grad(); loss = crit(model(X), y); loss.backward(); opt.step()",
+         "    losses.append(loss.item())",
+         "acc = (model(X).argmax(1) == y).float().mean().item()",
+         "print(f'final loss {losses[-1]:.3f},  accuracy {acc:.1%}')"),
+    md("## Loss curve and learned decision boundary"),
+    code("import matplotlib.pyplot as plt, numpy as np",
+         "",
+         "fig, (axL, axR) = plt.subplots(1, 2, figsize=(11, 4))",
+         "axL.plot(losses); axL.set_title('loss'); axL.set_xlabel('epoch'); axL.grid(alpha=0.3)",
+         "",
+         "xx, yy = np.meshgrid(np.linspace(-4, 4, 200), np.linspace(-4, 4, 200))",
+         "grid = torch.tensor(np.c_[xx.ravel(), yy.ravel()], dtype=torch.float32)",
+         "with torch.no_grad(): zz = model(grid).argmax(1).numpy().reshape(xx.shape)",
+         "axR.contourf(xx, yy, zz, alpha=0.3, cmap='coolwarm')",
+         "axR.scatter(X[:, 0], X[:, 1], c=y, cmap='coolwarm', s=12, edgecolor='k', linewidth=0.2)",
+         "axR.set_title('decision boundary'); plt.tight_layout(); plt.show()"),
+    md("## Takeaways",
+       "",
+       "- nn.Module + optimizer + loss = the same 5 steps as Day 22, less bookkeeping.",
+       "- The network carved a boundary between the classes purely from the loss signal.",
+       "",
+       "**Now build** build_model / train / accuracy in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 24 — CNNs
+# --------------------------------------------------------------------------------------
+DAY24 = [
+    md("# Day 24 — CNNs, Visualized",
+       "",
+       "A conv net detects local spatial patterns. We'll classify 'bright row' vs 'bright column'",
+       "8x8 images — trivial for convolution, hard for a flat MLP."),
+    code("import torch, torch.nn as nn",
+         "torch.manual_seed(0)",
+         "",
+         "def make_images(n=120):",
+         "    imgs, labels = [], []",
+         "    for i in range(n):",
+         "        img = torch.rand(1, 8, 8) * 0.1",
+         "        if i % 2 == 0: img[0, torch.randint(0, 8, (1,)).item(), :] += 1.0; labels.append(0)",
+         "        else: img[0, :, torch.randint(0, 8, (1,)).item()] += 1.0; labels.append(1)",
+         "        imgs.append(img)",
+         "    return torch.stack(imgs), torch.tensor(labels)",
+         "X, y = make_images()",
+         "print('data:', X.shape, ' labels:', y[:6].tolist(), '(0=row, 1=column)')"),
+    md("## A few samples"),
+    code("import matplotlib.pyplot as plt",
+         "fig, axes = plt.subplots(1, 4, figsize=(9, 2.6))",
+         "for ax, idx in zip(axes, [0, 1, 2, 3]):",
+         "    ax.imshow(X[idx, 0], cmap='gray'); ax.set_title(f'class {y[idx].item()}'); ax.axis('off')",
+         "plt.show()"),
+    code("class CNN(nn.Module):",
+         "    def __init__(self):",
+         "        super().__init__()",
+         "        self.conv = nn.Conv2d(1, 8, 3, padding=1); self.pool = nn.MaxPool2d(2)",
+         "        self.fc = nn.Linear(8 * 4 * 4, 2)",
+         "    def forward(self, x):",
+         "        return self.fc(self.pool(torch.relu(self.conv(x))).flatten(1))",
+         "",
+         "model = CNN(); opt = torch.optim.Adam(model.parameters(), lr=0.01); crit = nn.CrossEntropyLoss()",
+         "for _ in range(80):",
+         "    opt.zero_grad(); crit(model(X), y).backward(); opt.step()",
+         "print('accuracy:', (model(X).argmax(1) == y).float().mean().item())"),
+    md("## Takeaways",
+       "",
+       "- Convolution shares filter weights across the image -> detects a pattern anywhere.",
+       "- Watch the flattened size (8 channels x 4 x 4 = 128) into the final Linear — the classic bug.",
+       "",
+       "**Now build** SmallCNN / build_cnn / train in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 26 — Exporting
+# --------------------------------------------------------------------------------------
+DAY26 = [
+    md("# Day 26 — Exporting a Model, Visualized",
+       "",
+       "TorchScript captures a model into a portable file that runs without your Python code —",
+       "and must produce identical outputs."),
+    code("import torch, torch.nn as nn",
+         "torch.manual_seed(0)",
+         "model = nn.Sequential(nn.Linear(4, 8), nn.ReLU(), nn.Linear(8, 3)).eval()",
+         "",
+         "traced = torch.jit.trace(model, torch.randn(1, 4))",
+         "traced.save('/tmp/lp_day26_model.pt')",
+         "loaded = torch.jit.load('/tmp/lp_day26_model.pt')",
+         "",
+         "x = torch.randn(5, 4)",
+         "with torch.no_grad():",
+         "    print('max diff original vs reloaded:', (model(x) - loaded(x)).abs().max().item())"),
+    md("## Trace vs script",
+       "",
+       "`trace` records the ops from ONE run, so it can miss data-dependent control flow",
+       "(`if x.sum() > 0: ...`). `torch.jit.script` / `torch.export` capture the logic itself.",
+       "For straight-line models like this one, tracing is perfect."),
+    md("## Takeaways",
+       "",
+       "- Export = a portable artifact that runs without your training script.",
+       "- Always verify exported outputs match the original (allclose).",
+       "",
+       "**Now build** export_model / load_model in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 27 — ExecuTorch / lowering
+# --------------------------------------------------------------------------------------
+DAY27 = [
+    md("# Day 27 — Lowering Toward ExecuTorch, Visualized",
+       "",
+       "ExecuTorch runs models on-device with a tiny C++ runtime. The pipeline starts by lowering",
+       "your model to a clean graph with `torch.export` — that graph is what becomes a `.pte`."),
+    code("import torch, torch.nn as nn",
+         "torch.manual_seed(0)",
+         "model = nn.Sequential(nn.Linear(4, 8), nn.ReLU(), nn.Linear(8, 3)).eval()",
+         "x = torch.randn(3, 4)",
+         "",
+         "ep = torch.export.export(model, (x,))",
+         "print(type(ep).__name__)",
+         "with torch.no_grad():",
+         "    print('matches eager:', torch.allclose(model(x), ep.module()(x), atol=1e-5))"),
+    md("## The exported graph",
+       "",
+       "The exported program holds a backend-agnostic graph of the computation — no Python",
+       "control flow, ready for ahead-of-time compilation."),
+    code("print(ep.graph_module.code[:800])"),
+    md("## The full ExecuTorch path (conceptual)",
+       "",
+       "```",
+       "  nn.Module --torch.export--> ExportedProgram --to_edge/to_executorch--> model.pte",
+       "                                                                             |",
+       "                                          tiny C++ ExecuTorch runtime  <------+   (on device)",
+       "```",
+       "",
+       "Install the runtime with `pip install executorch` (see the README) to emit and run a `.pte`.",
+       "",
+       "**Now build** lower_model / run_exported in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 28 — Quantization
+# --------------------------------------------------------------------------------------
+DAY28 = [
+    md("# Day 28 — Quantization, Visualized",
+       "",
+       "Store weights as int8 instead of fp32: ~4x smaller and faster, for a tiny accuracy hit."),
+    code("import io, torch, torch.nn as nn",
+         "torch.manual_seed(0)",
+         "model = nn.Sequential(nn.Linear(64, 256), nn.ReLU(), nn.Linear(256, 256),",
+         "                      nn.ReLU(), nn.Linear(256, 10)).eval()",
+         "qmodel = torch.ao.quantization.quantize_dynamic(model, {nn.Linear}, dtype=torch.qint8)",
+         "",
+         "def size_kb(m):",
+         "    buf = io.BytesIO(); torch.save(m.state_dict(), buf); return buf.getbuffer().nbytes / 1024",
+         "print(f'fp32: {size_kb(model):.1f} KB   int8: {size_kb(qmodel):.1f} KB')"),
+    code("import matplotlib.pyplot as plt",
+         "x = torch.randn(8, 64)",
+         "with torch.no_grad(): err = (qmodel(x) - model(x)).abs().mean().item()",
+         "plt.figure(figsize=(5, 3.5))",
+         "plt.bar(['fp32', 'int8'], [size_kb(model), size_kb(qmodel)], color=['#888', '#55A868'])",
+         "plt.ylabel('KB'); plt.title(f'~4x smaller  (mean abs output error {err:.3f})')",
+         "plt.show()"),
+    md("## Takeaways",
+       "",
+       "- Dynamic quantization -> int8 Linear weights: smaller + faster, small accuracy cost.",
+       "- Verify the output error stays tiny relative to the signal.",
+       "- This is a standard last step before shipping a model to constrained hardware.",
+       "",
+       "**Now build** quantize / model_size_bytes in `homework.py`, then `pytest -q`.",
+       "You've now built the whole train -> export -> lower -> quantize deployment pipeline."),
+]
+
+
 def main() -> None:
     targets = {
         "curriculum/week1_data_structures/day01_dynamic_arrays/lesson.ipynb": DAY01,
@@ -1142,6 +1337,11 @@ def main() -> None:
         "curriculum/week3_systems_programming/day20_profiling/lesson.ipynb": DAY20,
         "curriculum/week3_systems_programming/day21_build_systems/lesson.ipynb": DAY21,
         "curriculum/week4_pytorch_executorch/day22_tensors_autograd/lesson.ipynb": DAY22,
+        "curriculum/week4_pytorch_executorch/day23_nn_module/lesson.ipynb": DAY23,
+        "curriculum/week4_pytorch_executorch/day24_cnns/lesson.ipynb": DAY24,
+        "curriculum/week4_pytorch_executorch/day26_exporting/lesson.ipynb": DAY26,
+        "curriculum/week4_pytorch_executorch/day27_executorch/lesson.ipynb": DAY27,
+        "curriculum/week4_pytorch_executorch/day28_quantization/lesson.ipynb": DAY28,
     }
     for rel, cells in targets.items():
         path = os.path.join(ROOT, rel)
