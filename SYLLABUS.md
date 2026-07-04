@@ -30,12 +30,12 @@ time you reach openpilot, nothing in its stack is a black box.
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
 | 08 | **Processes, threads & CPU scheduling** | notebook + pytest | FCFS / SJF / Round-Robin schedulers + metrics | ✅ |
-| 09 | Context switching & the process lifecycle | notebook | A state-machine simulator | ⬜ |
+| 09 | **Context switching & the process lifecycle** | notebook + pytest | A state-machine simulator | ✅ |
 | 10 | **Virtual memory & paging** | notebook + pytest | A page-table + FIFO/LRU page-replacement sim | ✅ |
-| 11 | Threads & the GIL | notebook + pytest | Threaded vs. multiprocess benchmark | ⬜ |
-| 12 | Synchronization: locks, semaphores | notebook + pytest | A bounded-buffer producer/consumer | ⬜ |
-| 13 | Deadlock & race conditions | notebook | Reproduce and fix a data race | ⬜ |
-| 14 | IPC, pipes & the file system | notebook + pytest | A tiny key-value store over a pipe | ⬜ |
+| 11 | **Threads & the GIL** | notebook + pytest | Threaded vs. multiprocess benchmark | ✅ |
+| 12 | **Synchronization: locks, semaphores** | notebook + pytest | A bounded-buffer producer/consumer | ✅ |
+| 13 | **Deadlock & race conditions** | notebook + pytest | Deadlock detector + reproduce/fix a race | ✅ |
+| 14 | **IPC, pipes & the file system** | notebook + pytest | A tiny key-value store over a pipe | ✅ |
 
 ## Week 3 — Systems Programming
 *Goal: touch the metal — memory, syscalls, and the C/Python boundary openpilot lives on.*

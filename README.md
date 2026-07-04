@@ -87,8 +87,9 @@ end-to-end (concept notebook + homework + passing auto-grader):
 - ✅ **Week 1 — Data Structures: complete (Days 01–07)**
   - Day 01 Dynamic Arrays · Day 02 Linked Lists · Day 03 Stacks/Queues/Ring Buffer ·
     Day 04 Hash Maps · Day 05 Trees & BSTs · Day 06 Heaps · Day 07 Graphs (BFS/DFS + grid pathfinding)
-- ✅ **Day 08 — Processes & CPU Scheduling** (`curriculum/week2_operating_systems/day08_processes_scheduling`)
-- ✅ **Day 10 — Virtual Memory & Paging** (`curriculum/week2_operating_systems/day10_virtual_memory`)
+- ✅ **Week 2 — Operating Systems: complete (Days 08–14)**
+  - Day 08 CPU Scheduling · Day 09 Process Lifecycle · Day 10 Virtual Memory · Day 11 Threads & the GIL ·
+    Day 12 Synchronization · Day 13 Deadlock · Day 14 IPC & Pipes
 - ✅ **Day 22 — Tensors & Autograd** (`curriculum/week4_pytorch_executorch/day22_tensors_autograd`)
 - ✅ **Day 29 — openpilot on-ramp** (`curriculum/capstone_openpilot/day29_openpilot_onramp`)
 
