@@ -65,6 +65,10 @@ Regenerate all sample notebooks with `make notebooks`.
    list in `README.md`.
 4. Open a PR.
 
+> **Maintaining or extending the repo with Claude Code?** There's a ready-to-paste onboarding
+> prompt for a fresh session in [`docs/HANDOFF.md`](docs/HANDOFF.md). The prompt below is the
+> *student tutor* one; that one is for *maintainers*.
+
 ## Suggested Claude Code tutor prompt
 
 Drop this into a `CLAUDE.md` at the repo root, or paste it when you start a session, to turn
