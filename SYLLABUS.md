@@ -103,9 +103,19 @@ DINO) on driving datasets (KITTI, NuScenes) — the on-ramp to a master's resear
 | 40 | **Reproducing a paper end-to-end** | guided | Clone → env → weights → inference → match the reported result | ✅ |
 | 41 | **Structuring a PyTorch research project** | pytest | Configs, seeds, logging, checkpoints — reproducibility utils | ✅ |
 
-### Weeks 7–8 (planned)
-- **Week 7 — Computer Vision & VLMs:** detection (YOLO), segmentation (SAM), open-vocab (Grounding DINO),
-  CLIP/VLMs, KITTI/NuScenes data formats.
+### Week 7 — Computer Vision & Vision-Language Models
+*Goal: run the open-source models the lab uses — YOLO, SAM, Grounding DINO — on driving data. (Advisor Stage 2.)*
+
+| Day | Topic | Format | You'll be able to | Status |
+|-----|-------|--------|-------------------|--------|
+| 42 | **Detection fundamentals: boxes, IoU & NMS** | pytest | Compute IoU, run non-max suppression, convert box formats | ✅ |
+| 43 | **YOLO: running a real detector** | guided | Clone YOLO, run inference, read its boxes/scores/labels | ✅ |
+| 44 | **Segmentation with SAM 2 / SAM 3** | guided | Prompt SAM with a point/box, get masks, understand the output | ✅ |
+| 45 | **Open-vocabulary detection: Grounding DINO** | guided | Detect objects from a *text prompt*, not a fixed class list | ✅ |
+| 46 | **CLIP & vision-language models** | pytest | Match images to text with embeddings + cosine similarity | ✅ |
+| 47 | **Datasets: KITTI & NuScenes** | guided | Understand driving-dataset formats; load labels for inference | ✅ |
+
+### Week 8 (planned)
 - **Week 8 — Paper Reading & Research On-ramp:** reading CVPR/ICCV/ECCV, reproducing, experiment
   tracking & ablations, a mini research capstone.
 
