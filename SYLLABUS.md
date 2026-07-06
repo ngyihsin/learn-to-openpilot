@@ -73,6 +73,34 @@ time you reach openpilot, nothing in its stack is a black box.
 
 ---
 
+## Extension — Beyond Day 30: toward computer-vision / VLM research
+
+*These weeks extend the original 30 to serve a specific goal: taking a learner from ML foundations to
+being able to reproduce papers and run modern vision / vision-language models (YOLO, SAM, Grounding
+DINO) on driving datasets (KITTI, NuScenes) — the on-ramp to a master's research project.*
+
+### Week 5 — ML & Deep Learning Foundations
+*Goal: the concepts the advanced courses assume — what "learning" is, and the two mechanisms
+(deep nets, attention) everything modern is built from.*
+
+| Day | Topic | Format | You'll build | Status |
+|-----|-------|--------|--------------|--------|
+| 31 | **numpy & array thinking** | notebook + pytest | Vectorized math, masks, axes, argmin, seeded rng | ✅ |
+| 32 | **The ML framing: model, loss, generalization** | notebook + pytest | Train/val split, polynomial fit, model selection | ✅ |
+| 33 | **Regression & gradient descent** | notebook + pytest | A linear model trained by hand-written gradient descent | ✅ |
+| 34 | **Classification: softmax & cross-entropy** | notebook + pytest | Softmax, cross-entropy, one-hot, argmax, accuracy | ✅ |
+| 35 | **Neural networks & backpropagation** | notebook + pytest | A 2-layer net with hand-derived backprop (gradient-checked) | ✅ |
+| 36 | **Self-attention & Transformers** | notebook + pytest | Scaled dot-product self-attention from scratch | ✅ |
+
+### Weeks 6–8 (planned)
+- **Week 6 — Research Toolchain:** Linux/CUDA, Git, Docker, reproducing a paper, PyTorch project structure.
+- **Week 7 — Computer Vision & VLMs:** detection (YOLO), segmentation (SAM), open-vocab (Grounding DINO),
+  CLIP/VLMs, KITTI/NuScenes data formats.
+- **Week 8 — Paper Reading & Research On-ramp:** reading CVPR/ICCV/ECCV, reproducing, experiment
+  tracking & ablations, a mini research capstone.
+
+---
+
 ## How the pieces connect to openpilot
 
 | What you learn here | Where it shows up in openpilot |

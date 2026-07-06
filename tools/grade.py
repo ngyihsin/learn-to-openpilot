@@ -56,7 +56,8 @@ def cmd_status() -> int:
         return 0
     print("\n  learn-openpilot — progress\n  " + "-" * 34)
     done = 0
-    for n in range(1, 31):
+    last_day = max(30, max(days))  # show the original 30 plus any extension weeks
+    for n in range(1, last_day + 1):
         d = days.get(n)
         if d is None:
             mark, label = "·", "(not built yet)"
@@ -69,9 +70,10 @@ def cmd_status() -> int:
             mark, label = "⬜", d.name + "  (homework not passing)"
         print(f"  Day {n:02d}  {mark}  {label}")
     gradable = sum(1 for d in days.values() if _has_grader(d))
+    planned = max(30, last_day)
     print("  " + "-" * 34)
     print(f"  {done}/{gradable} graded days passing "
-          f"({len(days)} lessons built of 30)\n")
+          f"({len(days)} lessons built of {planned})\n")
     return 0
 
 
