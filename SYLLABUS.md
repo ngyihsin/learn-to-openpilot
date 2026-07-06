@@ -92,8 +92,18 @@ DINO) on driving datasets (KITTI, NuScenes) — the on-ramp to a master's resear
 | 35 | **Neural networks & backpropagation** | notebook + pytest | A 2-layer net with hand-derived backprop (gradient-checked) | ✅ |
 | 36 | **Self-attention & Transformers** | notebook + pytest | Scaled dot-product self-attention from scratch | ✅ |
 
-### Weeks 6–8 (planned)
-- **Week 6 — Research Toolchain:** Linux/CUDA, Git, Docker, reproducing a paper, PyTorch project structure.
+### Week 6 — Research Toolchain
+*Goal: run other people's code, on real hardware, reproducibly. (Advisor Stage 1.)*
+
+| Day | Topic | Format | You'll be able to | Status |
+|-----|-------|--------|-------------------|--------|
+| 37 | **Linux, the shell & your GPU environment** | guided | Navigate the shell, make a venv, check CPU/GPU/CUDA | ✅ |
+| 38 | **Git & version control for research** | guided | Branch, commit, `.gitignore` big files, read a repo's history | ✅ |
+| 39 | **Docker & reproducible environments** | guided | Run a project in a container that works anywhere | ✅ |
+| 40 | **Reproducing a paper end-to-end** | guided | Clone → env → weights → inference → match the reported result | ✅ |
+| 41 | **Structuring a PyTorch research project** | pytest | Configs, seeds, logging, checkpoints — reproducibility utils | ✅ |
+
+### Weeks 7–8 (planned)
 - **Week 7 — Computer Vision & VLMs:** detection (YOLO), segmentation (SAM), open-vocab (Grounding DINO),
   CLIP/VLMs, KITTI/NuScenes data formats.
 - **Week 8 — Paper Reading & Research On-ramp:** reading CVPR/ICCV/ECCV, reproducing, experiment
