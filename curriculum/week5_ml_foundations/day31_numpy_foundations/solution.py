@@ -40,3 +40,9 @@ def reproducible_randoms(n: int, seed: int):
 def reorder(values, order):
     values = np.asarray(values, dtype=float)
     return values[np.asarray(order)]
+
+
+def matmul(A, B):
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    return A @ B

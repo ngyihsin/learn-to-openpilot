@@ -52,6 +52,8 @@ python3 -c "from homework import iou as f; print(round(f([0,0,2,2],[1,1,3,3]),4)
 ```
 
 **Step 4 · `nms(boxes, scores, iou_threshold)`** — greedy: keep top score, drop overlaps, repeat.
+One new numpy tool: `np.argsort(scores)` returns the *positions* that would sort the scores low→high
+(argmin's big sibling); add `[::-1]` to flip it to high→low. Everything else is a loop and your `iou`.
 ```bash
 python3 -c "from homework import nms as f; print(f([[0,0,10,10],[1,1,10,10],[20,20,30,30]],[0.9,0.8,0.7],0.5))"   # expect: [0, 2]
 ```

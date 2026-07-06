@@ -61,3 +61,13 @@ def reorder(values, order):
     True/False mask. (Day 32 uses exactly this to shuffle rows into train/validation splits.)"""
     # TODO: turn values into a float array, then index it with order
     raise NotImplementedError
+
+
+def matmul(A, B):
+    """Matrix multiply: return ``A @ B`` (as float arrays).
+
+    The rule: an (m, k) array @ a (k, n) array gives an (m, n) array — the INNER sizes must match.
+    Each output cell = a row of A dotted with a column of B. ``A.T`` (transpose) swaps rows/columns
+    when you need shapes to line up. Days 35–36 (neural nets, attention) are built on exactly this."""
+    # TODO: convert both to float arrays and return A @ B
+    raise NotImplementedError

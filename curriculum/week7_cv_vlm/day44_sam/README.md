@@ -29,7 +29,15 @@ pip install "sam2 @ git+https://github.com/facebookresearch/sam2.git"   # follow
 # then download a checkpoint the README points to, e.g. sam2 hiera-tiny
 ```
 
-**2 · Segment from a point prompt (Python sketch — mirror the repo's demo):**
+**2 · Load an image as a numpy array** (the step every CV demo assumes — here it is explicitly):
+```python
+from PIL import Image           # pip install pillow  (usually already present)
+import numpy as np
+image = np.array(Image.open("photo.jpg").convert("RGB"))
+print(image.shape)              # (H, W, 3) — height x width x 3 color channels. Day 31's arrays!
+```
+
+**3 · Segment from a point prompt (Python sketch — mirror the repo's demo):**
 ```python
 from sam2.sam2_image_predictor import SAM2ImagePredictor
 predictor = SAM2ImagePredictor.from_pretrained("facebook/sam2-hiera-tiny")
@@ -41,11 +49,29 @@ masks, scores, _ = predictor.predict(
 print("mask shape:", masks[0].shape, " score:", float(scores[0]))
 ```
 
-**3 · Understand the output.** `masks[0]` is a boolean `HxW` array — `True` where the object is. Overlay
+**4 · Understand the output.** `masks[0]` is a boolean `HxW` array — `True` where the object is. Overlay
 it on the image to see the segmentation. Try different prompt points and watch the mask change.
 
-**4 · The YOLO → SAM combo** (a real pipeline): run YOLO to get a *box*, feed that box to SAM as the
+**5 · The YOLO → SAM combo** (a real pipeline): run YOLO to get a *box*, feed that box to SAM as the
 prompt to get a precise *mask*. Detection finds *what/where*; segmentation refines it to *exact pixels*.
+
+## ✅ You did it right if…
+
+- `image.shape` prints `(H, W, 3)` for your photo.
+- `masks[0].shape` equals `(H, W)` — same height/width as the image — and `masks[0].sum()` is a big
+  number (the count of `True` pixels; 0 would mean an empty mask).
+- Clicking a point on a *different* object gives a visibly different mask.
+
+## If the install fails (it's the fragile part)
+
+The `git+https` install and checkpoint download are the two usual failure points. In order:
+1. Re-read the **sam2 repo README** — install steps change between releases; follow its current words,
+   not this page's sketch.
+2. Fallback that avoids the git install entirely: SAM is also on Hugging Face —
+   `pip install transformers` then use `facebook/sam2-hiera-tiny` via `transformers`' Sam classes.
+3. Still stuck? Check the repo's **GitHub Issues** for your exact error (Day 40 habit), and do the
+   concept work today: run steps 2 and 4 mentally on the README's figures — the promptable-mask idea
+   is the lesson; the install is logistics.
 
 ## Check yourself
 

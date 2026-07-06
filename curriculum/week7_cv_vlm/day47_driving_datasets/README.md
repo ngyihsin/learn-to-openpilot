@@ -38,10 +38,16 @@ That 2D box is exactly what your Day 42 `iou` and a detector's output use — yo
 
 ## NuScenes format (the mental model)
 
-NuScenes is a **relational database** of JSON tables you join by token (id):
-`sample` (a moment in time) → `sample_data` (one sensor's file) → `sample_annotation` (a 3D box) →
-`instance` (the same object tracked across time). You query it with the `nuscenes-devkit`, not by reading
-files by hand.
+NuScenes is a set of JSON tables that point at each other by **token** (a unique id string — think of
+it as a name tag). A `sample` (one moment in time) holds the tokens of its `sample_data` (each sensor's
+file at that moment) and its `sample_annotation`s (each labeled 3D box); an `instance` links the same
+physical object's annotations *across* moments (tracking). "Look up the record this token names" is all
+a *join* means here. You query it with the `nuscenes-devkit`, not by reading files by hand.
+
+In code that looks like **dicts inside dicts** (plain Python, nothing exotic):
+`sample["data"]` is a dict mapping sensor names to tokens, so `sample["data"]["CAM_FRONT"]` reads
+"from this sample, take the data dict, then take the front camera's token" — two `[...]` lookups in a
+row, exactly like `d["a"]["b"]` on any nested dict.
 
 ## Do this
 
@@ -64,6 +70,25 @@ print("first object:", ann["category_name"], "size", ann["size"])
 
 **2 · Run a detector on a real frame.** Load a KITTI or NuScenes front-camera image and run Day 43's YOLO
 on it. Compare YOLO's boxes to the dataset's ground-truth boxes — that comparison is the seed of *evaluation*.
+
+## ✅ You did it right if…
+
+- `NuScenes(version="v1.0-mini", ...)` loads without error and prints table counts (scenes, samples…).
+- You can print a front-camera image filename for a sample, and the file exists on disk.
+- For one annotation you can name its `category_name` (e.g. `vehicle.car`) and its `size` (3 numbers —
+  width/length/height in meters, sane values like `[1.9, 4.5, 1.6]` for a car).
+- Bonus: YOLO on that camera image finds the cars the ground truth says are there.
+
+## No download yet? Do the format exercise anyway
+
+The download (free account, a few GB for mini) is the friction point — the *format* is the lesson, and
+you can practice it right now. Parse this real-shaped KITTI label line with `.split()` and name every
+field from the table above:
+```
+Car 0.00 0 1.85 387.63 181.54 423.81 203.12 1.67 1.87 3.69 -16.53 2.39 58.49 1.57
+```
+Which four numbers are the 2D box? Would your Day 42 `iou` accept them as-is? (Yes — that's the point.)
+Then grab the download when convenient and re-run step 1.
 
 ## Check yourself
 

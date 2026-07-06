@@ -46,6 +46,21 @@ for r in results:
 I can name." This prompt-driven pipeline is a common modern baseline — and exactly the kind of system a
 vision-language lab builds on.
 
+## ✅ You did it right if…
+
+- Step 2 prints a line for **"a bus"** with score well above 0.5 and a box covering most of the image
+  (the bus dominates that photo), plus several **"a person"** boxes.
+- Changing the labels in step 3 changes *what gets detected* with no other code changes — if you ask
+  only for `["the front wheel"]`, you get wheel boxes and nothing else.
+
+## If the model download fails
+
+The first run downloads `grounding-dino-tiny` from Hugging Face (~700 MB). If it stalls: check your
+network/proxy, retry (downloads resume), or pre-fetch with
+`huggingface-cli download IDEA-Research/grounding-dino-tiny`. Offline entirely? Read the outputs in
+step 2's comments and do Day 46 first — it teaches the mechanism this model is built on, no download
+needed.
+
 ## Check yourself
 
 - What can Grounding DINO detect that YOLO (trained on COCO) fundamentally cannot, and why?

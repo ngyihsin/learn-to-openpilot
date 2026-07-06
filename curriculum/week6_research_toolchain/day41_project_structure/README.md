@@ -27,6 +27,12 @@ master's project.
 | **checkpoint** | A saved model state; you keep the *best* one by validation metric. |
 | **meter** | A tiny accumulator for a running average of a metric. |
 
+> **New Python here:** `AverageMeter` is a **class** — you'll write `self`, methods, and an
+> `@property` (a method read *without* parentheses, like a variable). If those are new or rusty, do
+> **Day 00 — The Python this course is written in** first (`curriculum/week0_python_bridge/`); it
+> teaches exactly these in one sitting. You'll also `raise ValueError` in `pick_best` — Day 00
+> covers that too.
+
 ## Do this — four steps
 
 Work top-to-bottom in `homework.py`; run each check in this folder.

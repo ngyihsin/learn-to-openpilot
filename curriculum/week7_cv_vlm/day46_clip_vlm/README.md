@@ -26,7 +26,7 @@ part that turns embeddings into a decision — is simple cosine similarity, and 
 | **embedding** | A vector that represents an image or a piece of text. |
 | **shared space** | Image and text embeddings live together, so they can be compared directly. |
 | **cosine similarity** | Similarity by *direction*, ignoring length: 1 = same, 0 = unrelated, −1 = opposite. |
-| **L2-normalize** | Rescale a vector to length 1 — so only its direction matters. |
+| **L2-normalize** | Rescale a vector to length 1 — so only its direction matters. ⚠️ *Different from Day 31's `normalize`!* That one re-centered data to mean 0 / std 1 (z-score); this one rescales to unit *length*. Same word, two meanings — both common in ML. |
 | **zero-shot** | Classify into categories you never trained on, just by describing them in text. |
 
 ## See it with intuition

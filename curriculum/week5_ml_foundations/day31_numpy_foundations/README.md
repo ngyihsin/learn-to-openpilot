@@ -38,6 +38,8 @@ That second behavior — arithmetic touching every element — is the whole poin
 | **boolean mask** | `x > 0` gives an array of True/False; `x[x > 0]` keeps only the True ones. |
 | **fancy indexing** | Index by a *list of positions*: `x[[2,0,1]]` picks those elements (and can reorder/shuffle). |
 | **axis** | Which dimension a reduction collapses. `M.mean(axis=0)` = per-column; `M.mean(axis=1)` = per-row. |
+| **matmul `@`** | Matrix multiply: `(m,k) @ (k,n) → (m,n)` — inner sizes must match. Each output cell = row of A · column of B. |
+| **transpose `.T`** | Swap rows and columns: a `(2,3)` array becomes `(3,2)`. Used to make shapes line up for `@`. |
 | **rng** | A *seeded* random generator: `np.random.default_rng(seed)` — same seed, same numbers, every run. |
 
 ## Learning goals
@@ -48,7 +50,7 @@ By the end you can:
 - Filter an array with a **boolean mask**, and reduce along a chosen **axis**.
 - Use `argmin` to find a nearest value, and draw **reproducible** random numbers from a seed.
 
-## Do this — seven small steps
+## Do this — eight small steps
 
 0. **Concept + visualization (~10 min).** Open `lesson.ipynb` and run every cell — you'll *see*
    numpy beat a Python loop on speed, watch broadcasting stretch one number across an array, and
@@ -96,6 +98,15 @@ True/False test, `values[order]` selects by a *list of positions* — the trick 
 data. `values[[2, 0, 4]]` returns elements 2, 0, 4 in that order.
 ```bash
 python3 -c "from homework import reorder as f; print(f([5,-2,9,-1,4], [2,0,4]))"    # expect: [9. 5. 4.]
+```
+
+**Step 8 · `matmul(A, B)` — matrix multiply.** The one operation deep learning is made of: `A @ B`.
+Worked by hand: `[[1,2],[3,4]] @ [[5],[6]]` — each output cell is *a row of A times a column of B,
+summed*: row 1 gives `1·5 + 2·6 = 17`, row 2 gives `3·5 + 4·6 = 39`. The shape rule: `(m,k) @ (k,n)`
+→ `(m,n)`, so the **inner sizes must match** — and when they don't, `.T` (transpose: swap
+rows/columns) usually fixes it. Days 35–36 use `@` and `.T` in every formula.
+```bash
+python3 -c "from homework import matmul as f; print(f([[1,2],[3,4]], [[5],[6]]))"   # expect: [[17.] [39.]]
 ```
 
 **Grade the whole day:** `pytest -q`  ·  or from the repo root `python tools/grade.py day 31`.

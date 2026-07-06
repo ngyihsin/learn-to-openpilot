@@ -15,7 +15,7 @@ assumed background, taught from zero.
 
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
-| 31 | **numpy & array thinking** | notebook + pytest | Vectorized math, masks, axes, argmin, seeded rng | ✅ |
+| 31 | **numpy & array thinking** | notebook + pytest | Vectorized math, masks, axes, argmin, matmul `@`, seeded rng | ✅ |
 | 32 | **The ML framing: model, loss, generalization** | notebook + pytest | Train/val split, polynomial fit, model selection | ✅ |
 | 33 | **Regression & gradient descent** | notebook + pytest | A linear model trained by hand-written gradient descent | ✅ |
 | 34 | **Classification: softmax & cross-entropy** | notebook + pytest | Softmax, cross-entropy, one-hot, argmax, accuracy | ✅ |

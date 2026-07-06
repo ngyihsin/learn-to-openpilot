@@ -34,6 +34,7 @@ row_means = _impl.row_means
 closest_index = _impl.closest_index
 reproducible_randoms = _impl.reproducible_randoms
 reorder = _impl.reorder
+matmul = _impl.matmul
 
 
 def test_scale_and_shift_is_vectorized():
@@ -81,3 +82,15 @@ def test_reorder_by_position():
     v = np.array([5.0, -2.0, 9.0, -1.0, 4.0])
     assert np.allclose(reorder(v, [2, 0, 4]), [9.0, 5.0, 4.0])   # pick positions 2,0,4
     assert np.allclose(reorder([10.0, 20.0, 30.0], [2, 1, 0]), [30.0, 20.0, 10.0])  # reverse as a shuffle
+
+
+def test_matmul_values_and_shape():
+    out = matmul([[1, 2], [3, 4]], [[5], [6]])          # (2,2) @ (2,1) -> (2,1)
+    assert out.shape == (2, 1)
+    assert np.allclose(out, [[17.0], [39.0]])           # row·column: 1*5+2*6, 3*5+4*6
+
+
+def test_matmul_with_transpose():
+    A = np.array([[1.0, 2.0, 3.0]])                     # (1,3)
+    # A @ A fails (inner sizes 3 vs 1) — transposing fixes the shapes:
+    assert np.allclose(matmul(A, A.T), [[14.0]])        # (1,3) @ (3,1) -> (1,1): 1+4+9

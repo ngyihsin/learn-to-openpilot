@@ -45,10 +45,31 @@ for box in r.boxes:
     conf = float(box.conf[0])            # confidence 0..1
     print(f"{cls:10s} {conf:.2f}  box={ [round(v) for v in xyxy] }")
 ```
+Two bits of syntax worth decoding: `box.xyxy[0]` is just *reaching into an object's attributes* —
+`results` holds boxes, each box holds its coordinates, `[0]` takes the first row, `.tolist()` converts
+to a plain list. And inside the f-string, `{conf:.2f}` means "2 decimal places", `{cls:10s}` means
+"pad the name to 10 characters" — formatting hints after a `:`, nothing more.
 
 **4 · Connect it back to Day 42.** Those `xyxy` boxes are exactly what your `iou` and `nms` take. Try
 lowering the confidence threshold (`model(..., conf=0.1)`) and watch duplicate/low-quality boxes appear —
 the mess NMS exists to clean up.
+
+## ✅ You did it right if…
+
+- Step 2 saved an annotated image under `runs/detect/predict/` showing a labeled **bus** box and
+  several **person** boxes.
+- Step 3 prints one line per object with a class name, a confidence around 0.3–0.95, and four
+  plausible pixel coordinates (inside the image's width/height).
+- With `conf=0.1`, the box count goes **up** (more low-confidence detections) — exactly the Day 42
+  threshold trade-off.
+
+## If the install fails
+
+- `pip install ultralytics` pulls in **torch** (~hundreds of MB). If the download stalls or 403s,
+  install torch first from default PyPI (`pip install torch`) and retry — and remember this
+  environment's rule from `docs/HANDOFF.md`: use the *default* index, not the pytorch CDN.
+- No GPU is fine: `yolo11n` (nano) runs on CPU in seconds per image. Start there, not with the large models.
+- Any other error: search the **ultralytics GitHub Issues** for the exact message (Day 40 habit).
 
 ## Check yourself
 

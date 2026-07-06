@@ -109,6 +109,10 @@ Loop over the candidate degrees. For each: `fit_polynomial` on the **train** dat
 **validation** data, score with `mse`. Return the degree with the **smallest validation MSE**. A very
 high degree will fit the training noise (low train loss) but score *worse* on validation — the loop
 rejects it for you.
+```bash
+python3 -c "import numpy as np; from homework import select_degree as f; x=np.linspace(-2,2,30); v=np.linspace(-1.8,1.8,15); print(f(x, x**2, v, v**2, [0,1,2]))"   # expect: 2
+```
+*(The data is a pure parabola, so degree 2 must win — degrees 0 and 1 can't bend to fit it.)*
 
 **Grade the whole day:** `pytest -q`  ·  or from the repo root `python tools/grade.py day 32`.
 

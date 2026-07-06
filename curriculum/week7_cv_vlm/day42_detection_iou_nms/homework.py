@@ -45,5 +45,8 @@ def nms(boxes, scores, iou_threshold: float = 0.5):
     Repeat: take the highest-scoring box that's left, keep it, and drop every remaining box
     whose IoU with it exceeds ``iou_threshold`` (they're duplicates of the same object).
     """
-    # TODO: sort indices by score (descending); loop, keeping the top and filtering the rest by iou
+    # TODO: sort indices by score (descending); loop, keeping the top and filtering the rest by iou.
+    # New numpy tool: np.argsort(scores) returns the POSITIONS that would sort the values low->high
+    # (a cousin of Day 31's argmin). Add [::-1] to reverse it to high->low:
+    #     order = list(np.argsort(scores)[::-1])
     raise NotImplementedError

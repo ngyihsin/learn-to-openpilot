@@ -11,6 +11,20 @@ time you reach openpilot, nothing in its stack is a black box.
 
 ---
 
+## Week 0 — The Python Bridge (start here)
+*Goal: the handful of Python features every homework file assumes — classes/`self`, dunder methods,
+exceptions, `@property`, type hints, and a 10-minute Big-O primer. One lesson; do it first.*
+
+| Day | Topic | Format | You'll build | Status |
+|-----|-------|--------|--------------|--------|
+| 00 | **The Python this course is written in** | pytest | A small class with dunders, a property, and clean errors | ✅ |
+
+> **Recommended study order for students new to ML:**
+> Day 00 → Weeks 1–3 → **Days 31–34** (numpy, the ML framing, gradient descent, classification) →
+> **Week 4** (PyTorch) → Days 35–36 → Weeks 6–8.
+> Week 4 assumes arrays and gradient descent, which Days 31–34 teach from zero — taking them first
+> turns Day 22's "tensor" and "gradient" from jargon into review.
+
 ## Week 1 — Data Structures & Algorithms
 *Goal: build the core containers from scratch and reason about cost with Big-O.*
 
@@ -85,7 +99,7 @@ DINO) on driving datasets (KITTI, NuScenes) — the on-ramp to a master's resear
 
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
-| 31 | **numpy & array thinking** | notebook + pytest | Vectorized math, masks, axes, argmin, seeded rng | ✅ |
+| 31 | **numpy & array thinking** | notebook + pytest | Vectorized math, masks, axes, argmin, matmul `@`, seeded rng | ✅ |
 | 32 | **The ML framing: model, loss, generalization** | notebook + pytest | Train/val split, polynomial fit, model selection | ✅ |
 | 33 | **Regression & gradient descent** | notebook + pytest | A linear model trained by hand-written gradient descent | ✅ |
 | 34 | **Classification: softmax & cross-entropy** | notebook + pytest | Softmax, cross-entropy, one-hot, argmax, accuracy | ✅ |
