@@ -65,17 +65,26 @@ exceptions, `@property`, type hints, and a 10-minute Big-O primer. One lesson; d
 | 21 | **Build systems (Make, scons, CMake)** | notebook + pytest | Dependency graph + incremental rebuild logic | ✅ |
 
 ## Week 4 — PyTorch / ExecuTorch
-*Goal: train a model, then ship it to run on-device the way openpilot does.*
+*Goal: train a model, then ship it to run on-device the way openpilot does. This is the most-used
+toolkit for the CV/VLM research ahead, so it's the deepest week — seven core days plus seven
+inserted "b/c/d/e" sub-days on the practical skills you use every day in a real repo.*
 
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
 | 22 | **Tensors & autograd** | notebook + pytest | Gradient descent from scratch, then with autograd | ✅ |
 | 23 | **`nn.Module` & the training loop** | notebook + pytest | Train an MLP classifier on a toy dataset | ✅ |
+| 23b | **Tensor shapes & broadcasting** | pytest | Read shapes, predict broadcasts, fix size-mismatch errors | ✅ |
 | 24 | **CNNs & computer vision** | notebook + pytest | A small CNN on synthetic images | ✅ |
+| 24b | **GPU & mixed precision (AMP)** | pytest | Device management + `autocast`; runs on your own GPU | ✅ |
 | 25 | **Datasets, DataLoaders & augmentation** | pytest | A custom Dataset + DataLoader pipeline | ✅ |
+| 25b | **Optimizers & LR scheduling** | pytest | SGD/Adam/AdamW, weight decay, step-decay & warmup | ✅ |
+| 25c | **Saving & loading checkpoints** | pytest | `state_dict` save/resume, keep the best epoch | ✅ |
+| 25d | **Transfer learning & fine-tuning** | pytest | Freeze a backbone, swap the head, fine-tune | ✅ |
+| 25e | **Building a Transformer block** | pytest | Self-attention → a reusable encoder block (bridges to VLMs) | ✅ |
 | 26 | **Exporting models (TorchScript / ONNX / `torch.export`)** | notebook + pytest | Export & re-load a trained model | ✅ |
 | 27 | **ExecuTorch**: on-device inference | notebook + pytest | Lower a model with torch.export and run it | ✅ |
 | 28 | **Quantization & making models fast** | notebook + pytest | Quantize a model, measure size + error | ✅ |
+| 28b | **A full training project (end-to-end)** | pytest | Dataset → split → train w/ validation → best checkpoint. Week 4 finale | ✅ |
 
 ## Days 29–30 — The openpilot On-Ramp
 *Goal: go from "I understand the pieces" to "I opened a PR."*
