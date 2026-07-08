@@ -63,6 +63,20 @@ tools/op.sh build      # scons under the hood — the build system from Day 21
 > instructions in `docs/` or the README" as part of the exercise — reading a real project's
 > docs is a skill. Ask Claude Code to help you interpret build errors.
 
+**✅ You did it right if:** `op.sh setup` finishes without errors, `op.sh build` ends with scons
+reporting success (no red error lines), and `ls tools/` shows the developer tools (replay, etc.).
+
+**If the build fails — this is normal, budget for it.** A full C++/Python robotics stack is the
+hardest build in this course; expect 30–60+ minutes and possible failures. In order:
+1. Re-run the failing command — some fetch steps are flaky.
+2. Read the *first* error, not the last: scons floods output, but the root cause is the first `error:`.
+3. Search openpilot's **GitHub Issues** and Discord for the exact message — build issues on common
+   Ubuntu versions are almost always already reported (Day 40 habit).
+4. Requirements matter: recent Ubuntu LTS, tens of GB free disk, and `--recurse-submodules` on the
+   clone (a missing-submodule error means re-clone with it).
+5. If the build stays stuck, **don't lose the day**: the architecture tour (section 1) and the
+   issue-scouting exercise (section 4) need no build — do those, and return to the build fresh.
+
 ## 3. Run it on recorded data (no car needed)
 
 openpilot logs let you **replay** a real route through the stack:

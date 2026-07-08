@@ -1317,6 +1317,240 @@ DAY28 = [
 ]
 
 
+# --------------------------------------------------------------------------------------
+# Day 31 — numpy & array thinking
+# --------------------------------------------------------------------------------------
+DAY31_NB = [
+    md("# Day 31 — numpy & Array Thinking",
+       "",
+       "See *why* arrays beat Python lists: the same math, far less code and time. Run every cell."),
+    md("## Vectorization: no loop, and much faster"),
+    code("import numpy as np, time",
+         "n = 1_000_000",
+         "xs = list(range(n))",
+         "t0 = time.perf_counter()",
+         "loop = [x * 2 + 1 for x in xs]            # a Python loop",
+         "t_loop = time.perf_counter() - t0",
+         "a = np.arange(n)",
+         "t0 = time.perf_counter()",
+         "vec = a * 2 + 1                           # numpy: the whole array at once",
+         "t_vec = time.perf_counter() - t0",
+         "print(f'loop {t_loop*1000:.1f} ms   numpy {t_vec*1000:.1f} ms   ->  {t_loop/max(t_vec,1e-9):.0f}x faster')"),
+    code("import matplotlib.pyplot as plt",
+         "plt.figure(figsize=(5, 3))",
+         "plt.bar(['python loop', 'numpy'], [t_loop*1000, t_vec*1000], color=['#C44E52', '#55A868'])",
+         "plt.ylabel('milliseconds'); plt.title('same result, a fraction of the time'); plt.show()"),
+    md("## Broadcasting and axis: one number stretches to fit"),
+    code("x = np.array([10., 20., 30., 40.])",
+         "print('x - x.mean() =', x - x.mean())        # the scalar mean is subtracted from every element",
+         "M = np.array([[1., 2., 3.], [4., 5., 6.]])",
+         "print('per-column mean (axis=0):', M.mean(axis=0))",
+         "print('per-row    mean (axis=1):', M.mean(axis=1))"),
+    md("## Two ways to index: a mask vs a list of positions"),
+    code("v = np.array([5., -2., 9., -1., 4.])",
+         "print('boolean mask v[v>0]   :', v[v > 0])   # select by a True/False test",
+         "print('fancy index  v[[2,0,4]]:', v[[2, 0, 4]])  # select/reorder by POSITION (Day 32 split)"),
+    md("## Matrix multiply `@` — the operation deep learning is made of",
+       "",
+       "Rule: `(m,k) @ (k,n) -> (m,n)` — inner sizes must match. Each output cell is a row of A",
+       "dotted with a column of B. `.T` (transpose) swaps rows/columns to make shapes line up."),
+    code("A = np.array([[1., 2.], [3., 4.]])        # (2,2)",
+         "B = np.array([[5.], [6.]])                # (2,1)",
+         "print('A @ B =', (A @ B).ravel())          # 1*5+2*6=17, 3*5+4*6=39",
+         "row = np.array([[1., 2., 3.]])            # (1,3)",
+         "print('row @ row.T =', (row @ row.T))      # (1,3)@(3,1)->(1,1): 1+4+9=14",
+         "print('shapes:', A.shape, B.shape, '->', (A @ B).shape)"),
+    md("## Takeaway",
+       "",
+       "- Think in whole arrays; a `for` loop is the exception, not the rule.",
+       "- `axis=0` collapses rows (per-column); `axis=1` collapses columns (per-row).",
+       "- `v[v>0]` selects by condition; `v[[2,0,4]]` selects by position.",
+       "- `A @ B` needs matching inner sizes; `.T` fixes shape mismatches. Days 35-36 run on this.",
+       "",
+       "**Now build** the eight functions in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 32 — the ML framing (overfitting made visible)
+# --------------------------------------------------------------------------------------
+DAY32_NB = [
+    md("# Day 32 — Model, Loss, Generalization",
+       "",
+       "Watch **overfitting** happen: as the model gets more complex, training error keeps falling",
+       "but *validation* error turns around. That turnaround is the whole lesson."),
+    code("import numpy as np, matplotlib.pyplot as plt",
+         "rng = np.random.default_rng(0)",
+         "truth = lambda x: 1.5*x**2 - 0.5*x + 0.2",
+         "x_tr = np.linspace(-1, 1, 40); x_val = np.linspace(-0.95, 0.95, 20)",
+         "y_tr = truth(x_tr) + rng.normal(0, 0.05, 40)",
+         "y_val = truth(x_val) + rng.normal(0, 0.05, 20)",
+         "mse = lambda a, b: float(np.mean((np.asarray(a) - np.asarray(b))**2))"),
+    md("## Training vs validation error across complexity"),
+    code("degrees = list(range(0, 13))",
+         "tr_err, va_err = [], []",
+         "for d in degrees:",
+         "    c = np.polyfit(x_tr, y_tr, d)",
+         "    tr_err.append(mse(y_tr, np.polyval(c, x_tr)))",
+         "    va_err.append(mse(y_val, np.polyval(c, x_val)))",
+         "plt.figure(figsize=(5.5, 3.5))",
+         "plt.plot(degrees, tr_err, 'o-', label='training error')",
+         "plt.plot(degrees, va_err, 's-', label='validation error')",
+         "plt.axvline(2, color='gray', ls='--', lw=1)",
+         "plt.xlabel('polynomial degree (complexity)'); plt.ylabel('MSE'); plt.yscale('log')",
+         "plt.legend(); plt.title('train error always falls; validation error turns around'); plt.show()"),
+    md("## What the models actually look like"),
+    code("xx = np.linspace(-1, 1, 200)",
+         "plt.figure(figsize=(5.5, 3.5))",
+         "plt.scatter(x_tr, y_tr, s=15, color='gray', label='training data')",
+         "for d, style in [(1, '--'), (2, '-'), (15, ':')]:",
+         "    c = np.polyfit(x_tr, y_tr, d)",
+         "    plt.plot(xx, np.polyval(c, xx), style, label=f'degree {d}')",
+         "plt.ylim(-0.5, 2); plt.legend(); plt.title('degree 15 wiggles to chase noise = overfitting'); plt.show()"),
+    md("## Takeaway",
+       "",
+       "- Lowest *training* error picks the most complex model — the wrong one.",
+       "- Lowest *validation* error picks the model that **generalizes** (here, degree 2).",
+       "- That is exactly what your `select_degree` does.",
+       "",
+       "**Now build** the five functions in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 33 — gradient descent (loss falling, line snapping on)
+# --------------------------------------------------------------------------------------
+DAY33_NB = [
+    md("# Day 33 — Regression by Gradient Descent",
+       "",
+       "Watch the loss fall as we nudge (w, b) downhill, and the line snap onto the data."),
+    code("import numpy as np, matplotlib.pyplot as plt",
+         "rng = np.random.default_rng(0)",
+         "x = np.linspace(-2, 2, 50); y = 3*x + 2 + rng.normal(0, 0.3, 50)",
+         "w = b = 0.0; lr = 0.05; losses = []; snaps = {}",
+         "for epoch in range(1, 401):",
+         "    pred = w*x + b; err = pred - y",
+         "    losses.append(float(np.mean(err**2)))",
+         "    dw = float(np.mean(2*err*x)); db = float(np.mean(2*err))",
+         "    w -= lr*dw; b -= lr*db",
+         "    if epoch in (1, 5, 50, 400): snaps[epoch] = (w, b)",
+         "print(f'learned w={w:.2f}, b={b:.2f}   (true 3, 2)')"),
+    md("## The loss falls toward zero"),
+    code("plt.figure(figsize=(5.5, 3)); plt.plot(losses)",
+         "plt.xlabel('epoch'); plt.ylabel('MSE loss'); plt.title('gradient descent minimizes the loss'); plt.show()"),
+    md("## The line snaps onto the data"),
+    code("plt.figure(figsize=(5.5, 3.5)); plt.scatter(x, y, s=12, color='gray', label='data')",
+         "for ep, (ww, bb) in snaps.items(): plt.plot(x, ww*x + bb, label=f'epoch {ep}')",
+         "plt.legend(); plt.title('the fit improves each step'); plt.show()"),
+    md("## Takeaway",
+       "",
+       "- No formula needed — just repeat: predict, measure the loss, step downhill.",
+       "- The same loop trains models with millions of parameters.",
+       "",
+       "**Now build** the functions in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 34 — softmax & cross-entropy
+# --------------------------------------------------------------------------------------
+DAY34_NB = [
+    md("# Day 34 — Softmax & Cross-Entropy",
+       "",
+       "See softmax turn scores into probabilities, and why cross-entropy punishes confident mistakes."),
+    code("import numpy as np, matplotlib.pyplot as plt",
+         "def softmax(z):",
+         "    z = np.asarray(z, float); e = np.exp(z - z.max()); return e / e.sum()",
+         "logits = np.array([1.0, 1.0, 3.0])",
+         "p = softmax(logits); print('logits', logits, '-> probs', np.round(p, 3))"),
+    code("plt.figure(figsize=(5, 3))",
+         "plt.bar(['class 0', 'class 1', 'class 2'], p, color='#4C72B0')",
+         "plt.ylabel('probability'); plt.title('softmax: bigger logit -> bigger share (sums to 1)'); plt.show()"),
+    md("## Cross-entropy: the cost of being confidently wrong"),
+    code("probs = np.linspace(0.001, 1.0, 200)",
+         "plt.figure(figsize=(5.5, 3)); plt.plot(probs, -np.log(probs))",
+         "plt.xlabel('probability given to the TRUE class'); plt.ylabel('cross-entropy loss')",
+         "plt.title('confident & right -> ~0 ; confident & wrong -> huge'); plt.show()"),
+    md("## Takeaway",
+       "",
+       "- Softmax = exponentiate then normalize -> a probability distribution.",
+       "- Cross-entropy = -log(prob of true class): mild when unsure, brutal when confidently wrong.",
+       "",
+       "**Now build** the functions in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 35 — a 2-layer net learns a curve (backprop)
+# --------------------------------------------------------------------------------------
+DAY35_NB = [
+    md("# Day 35 — A 2-Layer Net Learns a Curve",
+       "",
+       "A single line can't fit a curve; a hidden ReLU layer can. Watch backprop train it to fit a sine."),
+    code("import numpy as np, matplotlib.pyplot as plt",
+         "rng = np.random.default_rng(0)",
+         "X = np.linspace(-3, 3, 60).reshape(-1, 1); T = np.sin(X)",
+         "relu = lambda z: np.maximum(0.0, z)",
+         "H = 32",
+         "W1 = rng.normal(size=(1, H))*0.8; b1 = np.zeros(H)",
+         "W2 = rng.normal(size=(H, 1))*0.8; b2 = np.zeros(1)",
+         "losses = []",
+         "for epoch in range(4000):",
+         "    z1 = X @ W1 + b1; h = relu(z1); y = h @ W2 + b2",
+         "    n = y.size; dy = 2*(y - T)/n",
+         "    dW2 = h.T @ dy; db2 = dy.sum(0)",
+         "    dh = dy @ W2.T; dz1 = dh*(z1 > 0)",
+         "    dW1 = X.T @ dz1; db1 = dz1.sum(0)",
+         "    lr = 0.05; W1 -= lr*dW1; b1 -= lr*db1; W2 -= lr*dW2; b2 -= lr*db2",
+         "    losses.append(float(np.mean((y - T)**2)))",
+         "print('final loss', round(losses[-1], 4))"),
+    code("fig, ax = plt.subplots(1, 2, figsize=(9, 3.2))",
+         "ax[0].plot(losses); ax[0].set_yscale('log')",
+         "ax[0].set_title('training loss'); ax[0].set_xlabel('epoch')",
+         "ax[1].scatter(X, T, s=10, color='gray', label='target sin(x)')",
+         "ax[1].plot(X, relu(X @ W1 + b1) @ W2 + b2, color='#C44E52', label='network')",
+         "ax[1].legend(); ax[1].set_title('the net learned the curve'); plt.tight_layout(); plt.show()"),
+    md("## Takeaway",
+       "",
+       "- Stacking a ReLU hidden layer lets the network bend to fit non-linear shapes.",
+       "- Backprop = the chain rule, computing every gradient in one backward sweep.",
+       "",
+       "**Now build** forward/backward/train in `homework.py`, then `pytest -q`."),
+]
+
+
+# --------------------------------------------------------------------------------------
+# Day 36 — self-attention (weight heatmap)
+# --------------------------------------------------------------------------------------
+DAY36_NB = [
+    md("# Day 36 — Self-Attention",
+       "",
+       "Attention is a weighted blend: each position decides how much to look at every other one.",
+       "Let's compute the weights and visualize them."),
+    code("import numpy as np, matplotlib.pyplot as plt",
+         "def softmax(z, axis=-1):",
+         "    z = np.asarray(z, float); z = z - z.max(axis=axis, keepdims=True)",
+         "    e = np.exp(z); return e / e.sum(axis=axis, keepdims=True)",
+         "def attention(Q, K, V):",
+         "    dk = Q.shape[-1]; w = softmax(Q @ K.T / np.sqrt(dk)); return w @ V, w",
+         "# 5 tokens in 2-D: tokens 0,1 point one way; tokens 3,4 point another",
+         "X = np.array([[1, 0], [1, 0.2], [0, 1], [-1, 1], [-1, 0.8]], float)",
+         "out, w = attention(X, X, X)",
+         "print('attention weights (each row sums to 1):'); print(np.round(w, 2))"),
+    code("plt.figure(figsize=(4.2, 3.6)); im = plt.imshow(w, cmap='viridis')",
+         "plt.colorbar(im, fraction=0.046)",
+         "plt.xlabel('key (attended to)'); plt.ylabel('query (attending)')",
+         "plt.xticks(range(5)); plt.yticks(range(5)); plt.title('who attends to whom'); plt.show()"),
+    md("## Takeaway",
+       "",
+       "- Each row is one token's attention distribution over all tokens (it sums to 1).",
+       "- Similar tokens attend to each other — the bright blocks on the heatmap.",
+       "- Stacks of this layer are the core of Transformers, SAM, and Grounding DINO (Week 7).",
+       "",
+       "**Now build** softmax/attention/self_attention in `homework.py`, then `pytest -q`."),
+]
+
+
 def main() -> None:
     targets = {
         "curriculum/week1_data_structures/day01_dynamic_arrays/lesson.ipynb": DAY01,
@@ -1342,6 +1576,12 @@ def main() -> None:
         "curriculum/week4_pytorch_executorch/day26_exporting/lesson.ipynb": DAY26,
         "curriculum/week4_pytorch_executorch/day27_executorch/lesson.ipynb": DAY27,
         "curriculum/week4_pytorch_executorch/day28_quantization/lesson.ipynb": DAY28,
+        "curriculum/week5_ml_foundations/day31_numpy_foundations/lesson.ipynb": DAY31_NB,
+        "curriculum/week5_ml_foundations/day32_ml_framing/lesson.ipynb": DAY32_NB,
+        "curriculum/week5_ml_foundations/day33_gradient_descent/lesson.ipynb": DAY33_NB,
+        "curriculum/week5_ml_foundations/day34_classification/lesson.ipynb": DAY34_NB,
+        "curriculum/week5_ml_foundations/day35_backprop/lesson.ipynb": DAY35_NB,
+        "curriculum/week5_ml_foundations/day36_self_attention/lesson.ipynb": DAY36_NB,
     }
     for rel, cells in targets.items():
         path = os.path.join(ROOT, rel)

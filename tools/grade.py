@@ -19,17 +19,23 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CURRICULUM = ROOT / "curriculum"
 
-DAY_RE = re.compile(r"day(\d{2})_")
+DAY_RE = re.compile(r"day(\d{2})([a-z]?)_")
 
 
-def discover() -> dict[int, Path]:
-    """Map day-number -> lesson directory, sorted."""
-    days: dict[int, Path] = {}
+def discover() -> dict[str, Path]:
+    """Map day-code -> lesson directory, sorted. Codes are ``"22"`` or ``"23b"``
+    (a letter suffix marks an inserted sub-day, e.g. an extra PyTorch lesson)."""
+    days: dict[str, Path] = {}
     for d in sorted(CURRICULUM.glob("*/day*_*")):
         m = DAY_RE.match(d.name)
         if m and d.is_dir():
-            days[int(m.group(1))] = d
+            days[m.group(1) + m.group(2)] = d
     return days
+
+
+def _code_key(code: str) -> tuple[int, str]:
+    """Sort key so ``"23"`` < ``"23b"`` < ``"24"``."""
+    return (int(code[:2]), code[2:])
 
 
 def _has_grader(d: Path) -> bool:
@@ -56,8 +62,19 @@ def cmd_status() -> int:
         return 0
     print("\n  learn-openpilot — progress\n  " + "-" * 34)
     done = 0
-    for n in range(1, 31):
-        d = days.get(n)
+    nums = [_code_key(c)[0] for c in days]
+    first_day = min(1, min(nums))  # include Day 00 (the Python bridge) when present
+    last_day = max(30, max(nums))  # show the original 30 plus any extension weeks
+    # Build the display order: each integer day, followed by any lettered sub-days.
+    display: list[str] = []
+    for n in range(first_day, last_day + 1):
+        display.append(f"{n:02d}")
+        display.extend(sorted(
+            (c for c in days if _code_key(c) == (n, c[2:]) and len(c) > 2),
+            key=_code_key,
+        ))
+    for code in display:
+        d = days.get(code)
         if d is None:
             mark, label = "·", "(not built yet)"
         elif not _has_grader(d):
@@ -67,38 +84,40 @@ def cmd_status() -> int:
             done += 1
         else:
             mark, label = "⬜", d.name + "  (homework not passing)"
-        print(f"  Day {n:02d}  {mark}  {label}")
+        print(f"  Day {code:>3}  {mark}  {label}")
     gradable = sum(1 for d in days.values() if _has_grader(d))
+    planned = len(display)  # integer slots + any inserted sub-days
     print("  " + "-" * 34)
     print(f"  {done}/{gradable} graded days passing "
-          f"({len(days)} lessons built of 30)\n")
+          f"({len(days)} lessons built of {planned})\n")
     return 0
 
 
 def cmd_day(arg: str) -> int:
-    try:
-        n = int(arg)
-    except ValueError:
+    code = arg.strip().lower()
+    if code.isdigit():
+        code = f"{int(code):02d}"          # "8" -> "08"
+    elif not DAY_RE.match(f"day{code}_"):
         print(f"Not a day number: {arg!r}")
         return 2
-    d = discover().get(n)
+    d = discover().get(code)
     if d is None:
-        print(f"Day {n} isn't built yet. See SYLLABUS.md.")
+        print(f"Day {code} isn't built yet. See SYLLABUS.md.")
         return 1
     if not _has_grader(d):
-        print(f"Day {n} ({d.name}) is a read-only lesson — no auto-grader. "
+        print(f"Day {code} ({d.name}) is a read-only lesson — no auto-grader. "
               f"Read its README.md.")
         return 0
-    print(f"Grading Day {n}: {d.name}\n")
+    print(f"Grading Day {code}: {d.name}\n")
     return subprocess.run(
         [sys.executable, "-m", "pytest", str(d), "-v"], cwd=ROOT
     ).returncode
 
 
 def cmd_list() -> int:
-    for n, d in sorted(discover().items()):
+    for code, d in sorted(discover().items(), key=lambda kv: _code_key(kv[0])):
         kind = "graded" if _has_grader(d) else "read-only"
-        print(f"  Day {n:02d}  {d.relative_to(ROOT)}  [{kind}]")
+        print(f"  Day {code:>3}  {d.relative_to(ROOT)}  [{kind}]")
     return 0
 
 

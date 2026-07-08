@@ -11,6 +11,20 @@ time you reach openpilot, nothing in its stack is a black box.
 
 ---
 
+## Week 0 — The Python Bridge (start here)
+*Goal: the handful of Python features every homework file assumes — classes/`self`, dunder methods,
+exceptions, `@property`, type hints, and a 10-minute Big-O primer. One lesson; do it first.*
+
+| Day | Topic | Format | You'll build | Status |
+|-----|-------|--------|--------------|--------|
+| 00 | **The Python this course is written in** | pytest | A small class with dunders, a property, and clean errors | ✅ |
+
+> **Recommended study order for students new to ML:**
+> Day 00 → Weeks 1–3 → **Days 31–34** (numpy, the ML framing, gradient descent, classification) →
+> **Week 4** (PyTorch) → Days 35–36 → Weeks 6–8.
+> Week 4 assumes arrays and gradient descent, which Days 31–34 teach from zero — taking them first
+> turns Day 22's "tensor" and "gradient" from jargon into review.
+
 ## Week 1 — Data Structures & Algorithms
 *Goal: build the core containers from scratch and reason about cost with Big-O.*
 
@@ -51,17 +65,26 @@ time you reach openpilot, nothing in its stack is a black box.
 | 21 | **Build systems (Make, scons, CMake)** | notebook + pytest | Dependency graph + incremental rebuild logic | ✅ |
 
 ## Week 4 — PyTorch / ExecuTorch
-*Goal: train a model, then ship it to run on-device the way openpilot does.*
+*Goal: train a model, then ship it to run on-device the way openpilot does. This is the most-used
+toolkit for the CV/VLM research ahead, so it's the deepest week — seven core days plus seven
+inserted "b/c/d/e" sub-days on the practical skills you use every day in a real repo.*
 
 | Day | Topic | Format | You'll build | Status |
 |-----|-------|--------|--------------|--------|
 | 22 | **Tensors & autograd** | notebook + pytest | Gradient descent from scratch, then with autograd | ✅ |
 | 23 | **`nn.Module` & the training loop** | notebook + pytest | Train an MLP classifier on a toy dataset | ✅ |
+| 23b | **Tensor shapes & broadcasting** | pytest | Read shapes, predict broadcasts, fix size-mismatch errors | ✅ |
 | 24 | **CNNs & computer vision** | notebook + pytest | A small CNN on synthetic images | ✅ |
+| 24b | **GPU & mixed precision (AMP)** | pytest | Device management + `autocast`; runs on your own GPU | ✅ |
 | 25 | **Datasets, DataLoaders & augmentation** | pytest | A custom Dataset + DataLoader pipeline | ✅ |
+| 25b | **Optimizers & LR scheduling** | pytest | SGD/Adam/AdamW, weight decay, step-decay & warmup | ✅ |
+| 25c | **Saving & loading checkpoints** | pytest | `state_dict` save/resume, keep the best epoch | ✅ |
+| 25d | **Transfer learning & fine-tuning** | pytest | Freeze a backbone, swap the head, fine-tune | ✅ |
+| 25e | **Building a Transformer block** | pytest | Self-attention → a reusable encoder block (bridges to VLMs) | ✅ |
 | 26 | **Exporting models (TorchScript / ONNX / `torch.export`)** | notebook + pytest | Export & re-load a trained model | ✅ |
 | 27 | **ExecuTorch**: on-device inference | notebook + pytest | Lower a model with torch.export and run it | ✅ |
 | 28 | **Quantization & making models fast** | notebook + pytest | Quantize a model, measure size + error | ✅ |
+| 28b | **A full training project (end-to-end)** | pytest | Dataset → split → train w/ validation → best checkpoint. Week 4 finale | ✅ |
 
 ## Days 29–30 — The openpilot On-Ramp
 *Goal: go from "I understand the pieces" to "I opened a PR."*
@@ -70,6 +93,61 @@ time you reach openpilot, nothing in its stack is a black box.
 |-----|-------|--------|-----------|--------|
 | 29 | **openpilot architecture & building it** | guided README | Tour the stack, build it, run a replay | ✅ |
 | 30 | **Find a good-first-issue & open a PR** | guided README | Pick an issue, write a test, submit a PR | ✅ |
+
+---
+
+## Extension — Beyond Day 30: toward computer-vision / VLM research
+
+*These weeks extend the original 30 to serve a specific goal: taking a learner from ML foundations to
+being able to reproduce papers and run modern vision / vision-language models (YOLO, SAM, Grounding
+DINO) on driving datasets (KITTI, NuScenes) — the on-ramp to a master's research project.*
+
+### Week 5 — ML & Deep Learning Foundations
+*Goal: the concepts the advanced courses assume — what "learning" is, and the two mechanisms
+(deep nets, attention) everything modern is built from.*
+
+| Day | Topic | Format | You'll build | Status |
+|-----|-------|--------|--------------|--------|
+| 31 | **numpy & array thinking** | notebook + pytest | Vectorized math, masks, axes, argmin, matmul `@`, seeded rng | ✅ |
+| 32 | **The ML framing: model, loss, generalization** | notebook + pytest | Train/val split, polynomial fit, model selection | ✅ |
+| 33 | **Regression & gradient descent** | notebook + pytest | A linear model trained by hand-written gradient descent | ✅ |
+| 34 | **Classification: softmax & cross-entropy** | notebook + pytest | Softmax, cross-entropy, one-hot, argmax, accuracy | ✅ |
+| 35 | **Neural networks & backpropagation** | notebook + pytest | A 2-layer net with hand-derived backprop (gradient-checked) | ✅ |
+| 36 | **Self-attention & Transformers** | notebook + pytest | Scaled dot-product self-attention from scratch | ✅ |
+
+### Week 6 — Research Toolchain
+*Goal: run other people's code, on real hardware, reproducibly. (Advisor Stage 1.)*
+
+| Day | Topic | Format | You'll be able to | Status |
+|-----|-------|--------|-------------------|--------|
+| 37 | **Linux, the shell & your GPU environment** | guided | Navigate the shell, make a venv, check CPU/GPU/CUDA | ✅ |
+| 38 | **Git & version control for research** | guided | Branch, commit, `.gitignore` big files, read a repo's history | ✅ |
+| 39 | **Docker & reproducible environments** | guided | Run a project in a container that works anywhere | ✅ |
+| 40 | **Reproducing a paper end-to-end** | guided | Clone → env → weights → inference → match the reported result | ✅ |
+| 41 | **Structuring a PyTorch research project** | pytest | Configs, seeds, logging, checkpoints — reproducibility utils | ✅ |
+
+### Week 7 — Computer Vision & Vision-Language Models
+*Goal: run the open-source models the lab uses — YOLO, SAM, Grounding DINO — on driving data. (Advisor Stage 2.)*
+
+| Day | Topic | Format | You'll be able to | Status |
+|-----|-------|--------|-------------------|--------|
+| 42 | **Detection fundamentals: boxes, IoU & NMS** | pytest | Compute IoU, run non-max suppression, convert box formats | ✅ |
+| 43 | **YOLO: running a real detector** | guided | Clone YOLO, run inference, read its boxes/scores/labels | ✅ |
+| 44 | **Segmentation with SAM 2 / SAM 3** | guided | Prompt SAM with a point/box, get masks, understand the output | ✅ |
+| 45 | **Open-vocabulary detection: Grounding DINO** | guided | Detect objects from a *text prompt*, not a fixed class list | ✅ |
+| 46 | **CLIP & vision-language models** | pytest | Match images to text with embeddings + cosine similarity | ✅ |
+| 47 | **Datasets: KITTI & NuScenes** | guided | Understand driving-dataset formats; load labels for inference | ✅ |
+
+### Week 8 — Paper Reading & the Research On-ramp
+*Goal: read top-venue papers, find a direction, evaluate honestly. (Advisor Stage 3.)*
+
+| Day | Topic | Format | You'll be able to | Status |
+|-----|-------|--------|-------------------|--------|
+| 48 | **How to read a paper (CVPR/ICCV/ECCV)** | guided | Read a paper in 3 passes; extract the contribution & the catch | ✅ |
+| 49 | **Finding a topic & the literature map** | guided | Turn a vague interest into a question; map the related work | ✅ |
+| 50 | **Evaluating models: metrics done right** | pytest | Compute precision/recall/F1; avoid the accuracy trap | ✅ |
+| 51 | **Experiments, tracking & ablations** | guided | Design a fair comparison; change one thing at a time; log it | ✅ |
+| 52 | **Capstone: your mini research project** | guided | Scope a small reproduce-then-tweak project end-to-end | ✅ |
 
 ---
 

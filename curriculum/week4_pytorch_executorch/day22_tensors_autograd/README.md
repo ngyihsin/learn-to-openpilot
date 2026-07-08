@@ -1,6 +1,12 @@
 # Day 22 — Tensors & Autograd
 
 > **Week 4 · PyTorch / ExecuTorch** — the foundation everything else this week stands on.
+>
+> **New to arrays, gradients, or machine learning?** This day assumes them. The gentler on-ramp is
+> **Week 5 first**: Day 31 (numpy arrays — a *tensor* is numpy's array idea, on a GPU with gradients),
+> Day 32 (model/loss/generalization), and Day 33 (gradient descent by hand, including *what a gradient
+> is* in plain words). Do those, then return here — autograd will feel like automation of things you
+> already built. See the study-order note in `SYLLABUS.md`.
 
 ## Why today matters
 
