@@ -9,11 +9,19 @@ that's often too big and too slow. **Quantization** stores weights (and sometime
 8-bit integers, cutting size roughly 4× and speeding up compute, for a small and usually acceptable
 accuracy hit. It's a standard last step in the deployment pipeline you've been building all week.
 
+Quantization comes in three flavors, in increasing order of effort **and** of accuracy recovered:
+**dynamic** (weights quantized ahead of time, activations on the fly — the easiest, and what
+you'll do today), **static** (also pre-computes activation scales from a small calibration set),
+and **quantization-aware training (QAT)** (simulates int8 *during* training so the model learns
+around the error — the most work, recovers the most accuracy). Know all three by name; reach for
+the cheapest one that keeps your validation numbers.
+
 ## Learning goals
 
 By the end you can:
 
 - Explain what quantization trades (precision) for what (size + speed).
+- Name the three flavors — dynamic, static, QAT — and say which recovers the most accuracy.
 - Apply **dynamic quantization** to a model's Linear layers (int8).
 - Measure a model's footprint and verify quantized outputs stay close to the float version.
 
@@ -46,4 +54,5 @@ This completes the deployment story: train (Days 22–24) → feed data (25) →
 on-device (27) → quantize (28). On Day 29 you meet a real model that went through this whole
 pipeline to run in a car. **You've now built every piece of it.**
 
-**Next:** Day 29 — the openpilot on-ramp (already built) — put it all together.
+**Next:** Day 28b — a full training project, end-to-end. Then Day 28c trains the week's real
+finale: a continuous *driving* output, verified against a frame budget.

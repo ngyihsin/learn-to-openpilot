@@ -51,7 +51,7 @@ Every question is answerable from a specific lesson — the exam tests the cours
 | 1. Tensors, autograd & the training loop | 25 | Days 22, 23, 23b (+ Day 33 concepts) |
 | 2. Building & feeding models | 25 | Days 24, 25, 25b, 25c, 25d |
 | 3. From training to the car: export, ExecuTorch, quantization | 25 | Days 26, 27, 28 |
-| 4. Applied: an autonomous-driving inference project | 25 | Days 28b, 24b, capstone READMEs |
+| 4. Applied: an autonomous-driving inference project | 25 | Days 28b, 28c, 24b, capstone READMEs |
 
 ## Re-running the loop
 

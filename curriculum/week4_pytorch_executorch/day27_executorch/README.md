@@ -11,11 +11,19 @@ backend-agnostic graph → compile that to a `.pte` file → run it with the Exe
 optionally offloading pieces to hardware accelerators (delegates). This is essentially the path
 openpilot's driving model takes from training to running in the car.
 
+The fixed, ahead-of-time graph is the whole point. With no Python interpreter in the loop, the
+runtime can optimize the graph before it ever runs and plan its memory **once** — which is what
+makes latency predictable enough for a real-time device. And because the graph is explicit, a
+**delegate** can claim part (or all) of it and hand that piece to specialized hardware — a DSP,
+NPU, or GPU — while the C++ runtime executes the rest.
+
 ## Learning goals
 
 By the end you can:
 
 - Explain the ExecuTorch pipeline: export → lower/compile (`.pte`) → run on-device.
+- Say why an ahead-of-time graph beats eager mode on-device (no interpreter, AOT optimization,
+  fixed memory plan) and what a **delegate** is for.
 - Lower an `nn.Module` to an `ExportedProgram` with `torch.export` and run it.
 - Verify the lowered graph computes the same thing as the eager model.
 
