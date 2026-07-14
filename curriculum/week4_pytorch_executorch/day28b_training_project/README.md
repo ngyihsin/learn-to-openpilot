@@ -1,7 +1,7 @@
 # Day 28b — A Full Training Project (End-to-End)
 
 > **Week 4 · PyTorch / ExecuTorch** — everything this week, wired together into one real
-> training run. The Week 4 finale.
+> training run.
 
 ## Why today matters
 
@@ -58,8 +58,12 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
   reproducible without stomping on the global RNG.
 - `CrossEntropyLoss` wants raw **logits** and a **long** target vector — no softmax, no
   one-hot. `build_model`'s last `Linear` already gives you logits; leave them alone.
-- The #1 beginner bug in a real loop: scoring on the **training** set and calling it
-  "accuracy." That number always looks great and means nothing. Always report **val**.
+- Day 22's #1 bug was forgetting to zero gradients. The #1 **evaluation** bug is scoring on
+  the **training** set and calling it "accuracy." That number always looks great and means
+  nothing. Always report **val**.
+- Why keep the *best-val* epoch instead of the last? **Overfitting**: past some point the model
+  keeps getting better on the training set while its validation accuracy quietly degrades.
+  Validation peaks, then slides — you want the peak.
 - `copy.deepcopy(model.state_dict())` when you save the best checkpoint. A plain reference
   keeps pointing at the *live* weights, so the next epoch silently overwrites your "best."
 - Toggle `model.train()` before the training pass and `model.eval()` before scoring — it's
@@ -75,10 +79,12 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 
 ## Where this shows up later
 
-This is the template you'll reuse for the rest of the course. Day 29 starts the **openpilot
-on-ramp**, where the same train/validate/checkpoint rhythm scales up to a real driving model.
+This is the template you'll reuse for the rest of the course. Day 28c swaps this loop's
+classification parts for a **continuous driving output** — a regression loss, val MAE, and a
+latency check against the camera's frame budget. Then Day 29 starts the **openpilot on-ramp**,
+where the same train/validate/checkpoint rhythm scales up to a real driving model.
 Week 5 deepens the theory under this loop (loss landscapes, generalization); Week 7 swaps the
 blobs for images and the MLP for a CNN. Every one of them is *this* skeleton with a bigger
 dataset bolted on.
 
-**Next:** Day 29 — openpilot on-ramp.
+**Next:** Day 28c — steering-angle regression, the driving mini-project.

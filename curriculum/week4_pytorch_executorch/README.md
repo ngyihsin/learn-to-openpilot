@@ -17,6 +17,9 @@ training loops, CNNs, exporting, ExecuTorch lowering, and quantization.
 | 28 | [Quantization & making models fast](day28_quantization) | ✅ built |
 
 The week is a pipeline: **train (22–24) → feed data (25) → export (26) → lower on-device (27) →
-quantize (28)** — the same path openpilot's driving model takes from training to the car.
+quantize (28)** — the same path openpilot's driving model takes from training to the car. The
+finale (28b–28c) wires it all together: a full training project, then a **continuous driving
+output** (steering regression) verified against the camera's frame budget. Sub-days (23b, 24b,
+25b–e, 28b–c) are listed in [SYLLABUS.md](../../SYLLABUS.md).
 
 See [SYLLABUS.md](../../SYLLABUS.md) for the full plan.

@@ -64,6 +64,13 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
   autograd.
 - For `numerical_gradient`, use `float64` for accuracy and central differences (both sides),
   not a one-sided difference.
+- Numerical gradients are for *checking*, never for training: central differences cost two
+  forward passes **per parameter**, so a million-parameter model would need millions of forward
+  passes for a single update. One `backward()` gets every gradient at once — that's the entire
+  reason autograd (and backprop) exists.
+- You'll sometimes see the loop written with the zero step first — `opt.zero_grad()` before the
+  forward pass, as Day 23 does. It's the same loop rotated: all that matters is that gradients
+  are zeroed before the next `backward()`.
 
 ## Check yourself
 
