@@ -61,6 +61,9 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 - Day 22's #1 bug was forgetting to zero gradients. The #1 **evaluation** bug is scoring on
   the **training** set and calling it "accuracy." That number always looks great and means
   nothing. Always report **val**.
+- Why keep the *best-val* epoch instead of the last? **Overfitting**: past some point the model
+  keeps getting better on the training set while its validation accuracy quietly degrades.
+  Validation peaks, then slides — you want the peak.
 - `copy.deepcopy(model.state_dict())` when you save the best checkpoint. A plain reference
   keeps pointing at the *live* weights, so the next epoch silently overwrites your "best."
 - Toggle `model.train()` before the training pass and `model.eval()` before scoring — it's

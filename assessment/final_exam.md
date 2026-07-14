@@ -119,8 +119,8 @@ makes "keeping the best state" actually safe.
 
 **Q20 (5 pts).** (a) Why must the validation set never overlap the training set — what does a
 great score on training data actually tell you? (b) Why keep the *best-validation* epoch
-instead of the last epoch? (c) What is the #1 bug in real training loops the course warns
-about?
+instead of the last epoch? (c) What does the course name as the #1 **evaluation** bug in real
+training loops?
 
 **Q21 (5 pts).** Safety & workflow, per the capstone. (a) Where does all your openpilot
 development and testing happen, and what must you never do with unreviewed code? (b) What

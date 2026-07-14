@@ -168,7 +168,9 @@ it contradicts. Code answers: logic errors lose points, syntax slips don't.
   you nothing about new data; val is the honest estimate.
 - (1.5) The last epoch can be worse than an earlier one due to **overfitting** — val
   performance peaks and then degrades while train keeps improving.
-- (1.5) The #1 real-loop bug: scoring on the **training set** and calling it "accuracy."
+- (1.5) The #1 evaluation bug: scoring on the **training set** and calling it "accuracy."
+  (Do not accept "forgetting zero_grad" here — that is Day 22's *training* bug; the question
+  asks for the evaluation bug.)
 
 **Q21 (5).**
 - (2) All development/testing happens on your computer against **recorded or simulated data**

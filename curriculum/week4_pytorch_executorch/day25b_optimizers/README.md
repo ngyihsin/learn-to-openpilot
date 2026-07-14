@@ -60,6 +60,9 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
   whole trick: the lr holds flat for `every` steps, then drops by a factor of `drop`.
 - `warmup_lr` ramps linearly from a small value up to `base_lr` over `warmup_steps`, then holds:
   `base_lr * min(1.0, (step + 1) / warmup_steps)`. The `+1` means step 0 isn't a dead zero.
+  Why warm up at all: at step 0 the weights are random, so the first gradients are large and
+  noisy — hitting them with the full learning rate can blow the run up before it starts.
+  Ramping in tames those first steps.
 - In `lr_schedule`, read the lr *before* stepping the scheduler: `optimizer.param_groups[0]['lr']`.
   A scheduler mutates that value in place when you call `scheduler.step()`.
 
