@@ -108,4 +108,4 @@ enough for the car, *this* is the tool that closes the gap — the same mechanis
 `torchao`'s QAT, SNPE-style toolchains, and every "int8/int4 with no accuracy loss" paper
 claim you'll read in Weeks 7–8.
 
-**Next:** Day 29 — the openpilot on-ramp.
+**Next:** Day 28e — temporal models: one frame can't see motion; give the model memory.
