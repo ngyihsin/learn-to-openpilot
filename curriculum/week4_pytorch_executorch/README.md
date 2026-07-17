@@ -19,8 +19,9 @@ training loops, CNNs, exporting, ExecuTorch lowering, and quantization.
 The week is a pipeline: **train (22–24) → feed data (25) → export (26) → lower on-device (27) →
 quantize (28)** — the same path openpilot's driving model takes from training to the car. The
 finale (28b–28c) wires it all together: a full training project, then a **continuous driving
-output** (steering regression) verified against the camera's frame budget, and QAT built from
-scratch when post-training rounding costs too much accuracy. Sub-days (23b, 24b, 25b–e, 28b–d)
-are listed in [SYLLABUS.md](../../SYLLABUS.md).
+output** (steering regression) verified against the camera's frame budget, QAT built from
+scratch when post-training rounding costs too much accuracy, and temporal models that see
+motion a single frame can't. Sub-days (23b, 24b, 25b–e, 28b–e) are listed in
+[SYLLABUS.md](../../SYLLABUS.md).
 
 See [SYLLABUS.md](../../SYLLABUS.md) for the full plan.

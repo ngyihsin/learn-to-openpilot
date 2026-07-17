@@ -21,8 +21,9 @@ One consequence worth knowing before you meet real driving models: a fixed graph
 *mutable* state. A model that carries memory between frames (recurrent state, a rolling frame
 buffer) must expose that state as an **explicit input and output** of the exported graph — the
 runtime round-trips it every call, and the caller resets it when a new drive starts. Today's
-homework stays stateless; just remember that "the graph is a pure function" is a design
-constraint, not an accident.
+homework stays stateless; on Day 28e you'll build exactly such a model, with the state as an
+explicit argument from the start. "The graph is a pure function" is a design constraint, not
+an accident.
 
 ## Learning goals
 
