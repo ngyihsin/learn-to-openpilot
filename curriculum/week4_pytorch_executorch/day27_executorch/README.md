@@ -17,6 +17,13 @@ makes latency predictable enough for a real-time device. And because the graph i
 **delegate** can claim part (or all) of it and hand that piece to specialized hardware — a DSP,
 NPU, or GPU — while the C++ runtime executes the rest.
 
+One consequence worth knowing before you meet real driving models: a fixed graph cannot hold
+*mutable* state. A model that carries memory between frames (recurrent state, a rolling frame
+buffer) must expose that state as an **explicit input and output** of the exported graph — the
+runtime round-trips it every call, and the caller resets it when a new drive starts. Today's
+homework stays stateless; just remember that "the graph is a pure function" is a design
+constraint, not an accident.
+
 ## Learning goals
 
 By the end you can:

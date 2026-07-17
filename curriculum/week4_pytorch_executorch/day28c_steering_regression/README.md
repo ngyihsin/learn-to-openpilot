@@ -98,4 +98,5 @@ quantize (Day 28) → **verify fidelity and latency** (today). Day 29 walks into
 where `modeld` runs exactly this kind of model against exactly this kind of deadline, 20
 times a second.
 
-**Next:** Day 29 — the openpilot on-ramp.
+**Next:** Day 28d — quantization-aware training from scratch (when Day 28's shortcut isn't
+accurate enough for the car). Then Day 29 — the openpilot on-ramp.

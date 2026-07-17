@@ -66,7 +66,7 @@ exceptions, `@property`, type hints, and a 10-minute Big-O primer. One lesson; d
 
 ## Week 4 — PyTorch / ExecuTorch
 *Goal: train a model, then ship it to run on-device the way openpilot does. This is the most-used
-toolkit for the CV/VLM research ahead, so it's the deepest week — seven core days plus eight
+toolkit for the CV/VLM research ahead, so it's the deepest week — seven core days plus nine
 inserted "b/c/d/e" sub-days on the practical skills you use every day in a real repo.*
 
 | Day | Topic | Format | You'll build | Status |
@@ -86,6 +86,7 @@ inserted "b/c/d/e" sub-days on the practical skills you use every day in a real 
 | 28 | **Quantization & making models fast** | notebook + pytest | Quantize a model, measure size + error | ✅ |
 | 28b | **A full training project (end-to-end)** | pytest | Dataset → split → train w/ validation → best checkpoint | ✅ |
 | 28c | **Steering-angle regression (the driving mini-project)** | pytest | A CNN that regresses a continuous driving output + a latency check vs. the 20 Hz frame budget. Week 4 finale | ✅ |
+| 28d | **Quantization-aware training from scratch** | pytest | Fake-quant + straight-through estimator by hand; float vs PTQ vs QAT at 3 bits | ✅ |
 
 ## Days 29–30 — The openpilot On-Ramp
 *Goal: go from "I understand the pieces" to "I opened a PR."*

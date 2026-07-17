@@ -14,7 +14,8 @@ Quantization comes in three flavors, in increasing order of effort **and** of ac
 you'll do today), **static** (also pre-computes activation scales from a small calibration set),
 and **quantization-aware training (QAT)** (simulates int8 *during* training so the model learns
 around the error — the most work, recovers the most accuracy). Know all three by name; reach for
-the cheapest one that keeps your validation numbers.
+the cheapest one that keeps your validation numbers. Today is dynamic; on Day 28d you'll build
+QAT itself from scratch and watch it recover what post-training rounding destroys.
 
 ## Learning goals
 

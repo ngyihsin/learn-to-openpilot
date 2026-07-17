@@ -29,6 +29,13 @@ By the end you can:
 - With `batch_size=4` over 10 items you get batches of `[4, 4, 2]` — the last one is the leftover.
 - `standardize`: use `X.mean(dim=0, keepdim=True)` and `X.std(dim=0, keepdim=True)`; add a small
   epsilon to the std so a constant column doesn't divide by zero.
+- **Augmentation** lives in `__getitem__` too: randomly perturb the sample each time it's
+  fetched (so every epoch sees a fresh variation), on the **training** set only — never the
+  validation set you score yourself on. And augment the *label* when the transform demands
+  it: horizontally flipping a driving frame mirrors the scene, so its steering label must be
+  **negated** (Day 28c's label geometry) or you'd silently teach the model to steer the
+  wrong way on half your data. Photometric tweaks (brightness, noise) leave labels alone;
+  geometric ones (flips, shifts, crops) usually don't.
 
 ## Check yourself
 
